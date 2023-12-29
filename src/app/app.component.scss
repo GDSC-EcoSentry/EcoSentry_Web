@@ -1,0 +1,18 @@
+mat-sidenav {
+    width: 300px;
+    background-color: #1b5e20;
+}
+
+mat-nav-list span{
+    color: white;
+    font-size: large;
+    font-weight: 600;
+}
+
+.mat-mdc-list-base {
+    --mdc-list-list-item-one-line-container-height: 70px;
+}
+
+.sidenav-footer{
+    margin-top: 60vh;
+}

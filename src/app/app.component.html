@@ -1,0 +1,22 @@
+<app-toolbar [sidenav]="sidenav"></app-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav>
+        <mat-nav-list>
+            <mat-list-item routerLink="/" class="mt-3"><span><i class="fa fa-home me-2"></i>Home</span></mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item routerLink="/dashboard"><span><i class="fa fa-bar-chart me-2"></i>Dashboard</span></mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item routerLink="/account/profile"><span><i class="fa fa-user me-2"></i>Profile</span></mat-list-item>
+            <mat-divider></mat-divider>
+            <div class="sidenav-footer">
+                <mat-divider></mat-divider>
+                <mat-list-item routerLink="/account/sign-out"><span><i class="fa fa-sign-out me-2"></i>Sign Out</span></mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content style="height: calc(100vh - 64px)">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
