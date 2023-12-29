@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
+import { HomeModule } from './home/home.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {MatDividerModule} from '@angular/material/divider';
     CoreModule,
     MatSidenavModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,12 +3,12 @@
         <button mat-icon-button (click)="sidenav.toggle()" class="d-flex align-items-center">
             <mat-icon>menu</mat-icon>
         </button>
-        <h1 class="ms-3" routerLink="/" style="cursor: pointer; font-size: 20px;">
+        <span class="ms-3" routerLink="/" style="cursor: pointer; font-size: 20px;">
             <i class="fa fa-leaf"></i> EcoSentry
-        </h1>
+        </span>
     </div>
     <div class="flex-grow-1"></div>
-    <button mat-button routerLink="/account/login">
+    <button mat-button routerLink="/account/login" class="me-2">
         <i class="fa fa-sign-in"></i> Login
     </button>
 </mat-toolbar>

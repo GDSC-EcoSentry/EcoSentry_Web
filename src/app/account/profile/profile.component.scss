@@ -1,0 +1,30 @@
+.form-container{
+    padding: 50px;
+    border-radius: 20px;
+    color: #1b5e20;
+    background-color: whitesmoke;
+}
+
+.profile-image {
+    position: relative;
+}
+
+.profile-image button{
+    position: absolute;
+    bottom: 1px;
+    right: 37%;
+    background-color: #673ab7;
+    color: white
+}
+
+.profile-image img{
+    border-radius: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .profile-image button{
+        right: 24%;
+    }
+}

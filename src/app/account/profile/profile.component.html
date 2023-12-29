@@ -1,0 +1,36 @@
+<div class="text-center mb-4 mt-5">
+    <h1 class="mb-3" style="color: #1b5e20;">User Profile</h1>
+</div>
+
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-md-4 col-sm-10 col-10 p-5 form-container mat-elevation-z5">
+        <div class="profile-image d-flex justify-content-center">
+            <img 
+                width="150" 
+                height="150" 
+                src='../../assets/images/user-placeholder.jpg'>
+            <button mat-mini-fab (click)="inputField.click()">
+                <i class="fa fa-edit"></i>
+            </button>
+        </div>
+        <input #inputField type="file" hidden>
+
+        <form class="mt-5" [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+            <div class="row">
+                <app-text-input class="col-6" [formControl]="profileForm.controls['firstName']" [label]="'First Name'"></app-text-input>
+                <app-text-input class="col-6" [formControl]="profileForm.controls['lastName']" [label]="'Last Name'"></app-text-input>
+            </div>
+        
+            <div class="row">
+                <app-text-input class="col-6" [formControl]="profileForm.controls['displayName']" [label]="'Display Name'"></app-text-input>
+                <app-text-input class="col-6" [formControl]="profileForm.controls['phone']" [label]="'Phone Number'"></app-text-input>
+            </div>
+
+            <app-text-input [formControl]="profileForm.controls['address']" [label]="'Address'"></app-text-input>
+        
+            <div class="d-grid mb-3">
+                <button mat-raised-button color="primary" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

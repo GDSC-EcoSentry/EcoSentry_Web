@@ -1,0 +1,15 @@
+<div class="text-center mb-4 mt-5">
+    <h1 class="mb-3" style="color: #1b5e20;">Verify Email</h1>
+</div>
+
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-md-3 col-sm-10 col-10 form-container mat-elevation-z5">
+        <app-text-input [formControl]="verifyEmailControl" [label]="'Email Address'"></app-text-input>
+        <div class="d-grid mb-3">
+            <button mat-raised-button color="primary">
+                Send Verification
+            </button>
+        </div>
+        <div>Didn't receive a verification? <a routerLink="/account/register">Resend Verification</a></div>
+    </div>
+</div>

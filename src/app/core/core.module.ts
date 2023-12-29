@@ -4,6 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from '../shared/shared.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MatToolbarModule,
     SharedModule,
     MatSidenavModule,
+    RouterModule
   ],
   exports: [
     ToolbarComponent

@@ -1,0 +1,13 @@
+<div class="mb-4">
+    <label class="mb-2" style="color: #1b5e20; font-weight: 600;">{{label}}<span *ngIf="required"> *</span></label>
+    <input
+        type={{type}}
+        [formControl]="control"
+        class="form-control"
+        [ngClass]="(control.touched) ? control.invalid ? 'is-invalid' : null : null">
+    <div *ngIf="control.errors?.['required']" class="invalid-feedback"> Please enter {{label}} </div>
+    <div *ngIf="control.errors?.['email']" class="invalid-feedback"> Invalid email address </div>
+    <div *ngIf="control.errors?.['pattern']" class="invalid-feedback">Password is not complex enough</div>
+    <div *ngIf="control.errors?.['emailExists']" class="invalid-feedback"> Email address is taken </div>
+    <div *ngIf="control.errors?.['passwordNotMatch']" class="invalid-feedback"> Passwords do not match </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="text-center mb-4 mt-5">
+    <h1 class="mb-3" style="color: #1b5e20;">Sign Up</h1>
+</div>
+
+<div class="d-flex justify-content-center mt-3">
+    <div class="col-md-3 col-sm-10 col-10 form-container mat-elevation-z5">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="d-grid">
+                <button mat-raised-button style="height: 50px;">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img src="../../../assets/images/Google__G__logo.svg" height="24px" width="24px" class="me-2"> Continue with Google
+                    </div>
+                </button>
+            </div>
+
+            <div class="divider-container mb-4 mt-4">
+                <div class="line"><mat-divider></mat-divider></div>
+                <div class="text mat-typography">Or</div>
+                <div class="line"><mat-divider></mat-divider></div>
+            </div>
+            <app-text-input [formControl]="registerForm.controls['displayName']" [label]="'Display Name'"></app-text-input>
+            <app-text-input [formControl]="registerForm.controls['email']" [label]="'Email Address'"></app-text-input>
+            <app-text-input [formControl]="registerForm.controls['password']" [type]="'password'" [label]="'Password'"></app-text-input>
+            <app-text-input [formControl]="registerForm.controls['confirmPassword']" [type]="'password'" [label]="'Confirm Password'"></app-text-input>
+
+            <div class="d-grid mb-3 mt-4">
+              <button mat-raised-button color="primary" [disabled]="registerForm.invalid" type="submit" style="height: 50px;">Sign up</button>
+            </div>
+            <div>Already have an account? <a routerLink="/account/login">Sign in</a></div>
+        </form>
+    </div>
+</div>
