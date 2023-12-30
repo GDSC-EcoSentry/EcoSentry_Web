@@ -10,7 +10,7 @@
     <div class="flex-grow-1"></div>
     <ng-container *ngIf="user$ | async as user; else loginButton">
         <div class="me-3">
-            <img style="border-radius: 100%; margin-right: 5px; cursor: pointer;" width="40" height="40" 
+            <img style="border-radius: 100%; margin-right: 10px; cursor: pointer;" width="40" height="40" 
                 [src]="user.photoURL ?? '../../assets/images/user-placeholder.jpg'" routerLink="/account/profile">
             <button mat-button routerLink="/account/profile" class="profile-button" color="accent">
                 {{user.username}}

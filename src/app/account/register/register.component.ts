@@ -46,6 +46,28 @@ export class RegisterComponent {
     }
   }
 
+  signInWithGoogle() {
+    this.accountService.signInWithGoogle()
+    .subscribe({
+      next: ({ user: { uid, email } }) => {
+        const username = email?.substring(0, email.indexOf('@'));
+        this.usersService.getExistedUser(uid).subscribe({
+          next: (userExisted) => {
+            if(!userExisted && uid && email && username) {
+              this.usersService.addUser({ uid, email, username }).subscribe({
+                next: () => this.router.navigateByUrl('')
+              });
+            }
+            else this.router.navigateByUrl('');
+          }
+        })
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+  }
+
   get name() {
     return this.registerForm.get('name');
   }
