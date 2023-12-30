@@ -1,4 +1,4 @@
-<div class="mb-4">
+<div>
     <label class="mb-2" style="color: #1b5e20; font-weight: 600;">{{label}}<span *ngIf="required"> *</span></label>
     <input
         type={{type}}
@@ -10,4 +10,5 @@
     <div *ngIf="control.errors?.['pattern']" class="invalid-feedback">Password is not complex enough</div>
     <div *ngIf="control.errors?.['emailExists']" class="invalid-feedback"> Email address is taken </div>
     <div *ngIf="control.errors?.['passwordNotMatch']" class="invalid-feedback"> Passwords do not match </div>
+    <div *ngIf="control.errors?.['invalidCredentials']" class="invalid-feedback"> Wrong Email or Password </div>
 </div>

@@ -18,9 +18,12 @@
                 <div class="text mat-typography">Or</div>
                 <div class="line"><mat-divider></mat-divider></div>
             </div>
-            
-            <app-text-input [formControl]="loginForm.controls['email']" [label]="'Email Address'"></app-text-input>
-            <app-text-input [formControl]="loginForm.controls['password']" [type]="'password'" [label]="'Password'"></app-text-input>
+            <div class="mb-4">
+                <app-text-input [formControl]="loginForm.controls['email']" [label]="'Email Address'"></app-text-input>
+            </div>
+            <div class="mb-2">
+                <app-text-input [formControl]="loginForm.controls['password']" [type]="'password'" [label]="'Password'"></app-text-input>
+            </div>
             <div class="mb-4"><a routerLink="/account/verify">Forgot your password?</a></div>
             <div class="d-grid mb-3">
               <button mat-raised-button color="primary" [disabled]="loginForm.invalid" type="submit" style="height: 50px;">Sign in</button>

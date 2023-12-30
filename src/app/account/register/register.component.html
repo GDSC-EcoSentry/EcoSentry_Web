@@ -18,11 +18,18 @@
                 <div class="text mat-typography">Or</div>
                 <div class="line"><mat-divider></mat-divider></div>
             </div>
-            <app-text-input [formControl]="registerForm.controls['displayName']" [label]="'Display Name'"></app-text-input>
-            <app-text-input [formControl]="registerForm.controls['email']" [label]="'Email Address'"></app-text-input>
-            <app-text-input [formControl]="registerForm.controls['password']" [type]="'password'" [label]="'Password'"></app-text-input>
-            <app-text-input [formControl]="registerForm.controls['confirmPassword']" [type]="'password'" [label]="'Confirm Password'"></app-text-input>
-
+            <div class="mb-4">
+                <app-text-input [formControl]="registerForm.controls['username']" [label]="'Username'"></app-text-input>
+            </div>
+            <div class="mb-4">
+                <app-text-input [formControl]="registerForm.controls['email']" [label]="'Email Address'"></app-text-input>
+            </div>
+            <div class="mb-4">
+                <app-text-input [formControl]="registerForm.controls['password']" [type]="'password'" [label]="'Password'"></app-text-input>
+            </div>
+            <div class="mb-4">
+                <app-text-input [formControl]="registerForm.controls['confirmPassword']" [type]="'password'" [label]="'Confirm Password'"></app-text-input>
+            </div>
             <div class="d-grid mb-3 mt-4">
               <button mat-raised-button color="primary" [disabled]="registerForm.invalid" type="submit" style="height: 50px;">Sign up</button>
             </div>

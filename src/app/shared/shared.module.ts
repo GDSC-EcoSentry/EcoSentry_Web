@@ -5,6 +5,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { TextInputComponent } from './text-input/text-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatDividerModule} from '@angular/material/divider';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 
@@ -17,14 +19,18 @@ import {MatDividerModule} from '@angular/material/divider';
     MatIconModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatToolbarModule,
+    MatSidenavModule
   ],
   exports: [
     MatIconModule,
     MatButtonModule,
     TextInputComponent,
     ReactiveFormsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatToolbarModule,
+    MatSidenavModule
   ]
 })
 export class SharedModule { }

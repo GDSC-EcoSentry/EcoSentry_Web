@@ -16,18 +16,17 @@
         <input #inputField type="file" hidden>
 
         <form class="mt-5" [formGroup]="profileForm" (ngSubmit)="saveProfile()">
-            <div class="row">
+            <div class="row mb-4">
                 <app-text-input class="col-6" [formControl]="profileForm.controls['firstName']" [label]="'First Name'"></app-text-input>
                 <app-text-input class="col-6" [formControl]="profileForm.controls['lastName']" [label]="'Last Name'"></app-text-input>
             </div>
-        
-            <div class="row">
+            <div class="row mb-4">
                 <app-text-input class="col-6" [formControl]="profileForm.controls['displayName']" [label]="'Display Name'"></app-text-input>
                 <app-text-input class="col-6" [formControl]="profileForm.controls['phone']" [label]="'Phone Number'"></app-text-input>
             </div>
-
-            <app-text-input [formControl]="profileForm.controls['address']" [label]="'Address'"></app-text-input>
-        
+            <div class="row mb-4">
+                <app-text-input [formControl]="profileForm.controls['address']" [label]="'Address'"></app-text-input>
+            </div>
             <div class="d-grid mb-3">
                 <button mat-raised-button color="primary" type="submit">Save</button>
             </div>

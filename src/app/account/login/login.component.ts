@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +14,34 @@ export class LoginComponent {
     password: ['', Validators.required]
   })
 
-  constructor(private fb: NonNullableFormBuilder) {}
+  constructor(
+    private fb: NonNullableFormBuilder, 
+    private accountService: AccountService, 
+    private router: Router
+  ) {}
+
+  get email(){
+    return this.loginForm.get('email');
+  }
+
+  get password(){
+    return this.loginForm.get('password');
+  }
 
   onSubmit(){
+    if(!this.loginForm.valid){
+      return;
+    }
 
+    const {email, password} = this.loginForm.value;
+    if(email && password) this.accountService.login(email, password)
+    .subscribe({
+      next: () => this.router.navigateByUrl(''),
+      error: error => {
+        console.log(error);
+        this.email?.setErrors({ invalidCredentials: true });
+        this.password?.setErrors({ invalidCredentials: true });
+      }  
+    });
   }
 }
