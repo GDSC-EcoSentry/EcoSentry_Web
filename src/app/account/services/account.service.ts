@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, authState, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, browserLocalPersistence, inMemoryPersistence } from '@angular/fire/auth';
+import { Auth, authState, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, browserLocalPersistence, inMemoryPersistence, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { from } from 'rxjs';
 
 @Injectable({
@@ -17,6 +17,10 @@ export class AccountService {
     }
     else this.auth.setPersistence(inMemoryPersistence);
     return from(signInWithEmailAndPassword(this.auth, username, password));
+  }
+
+  signInWithGoogle() {
+    return from(signInWithPopup(this.auth, new GoogleAuthProvider()));
   }
 
   register(email: string, password: string) {

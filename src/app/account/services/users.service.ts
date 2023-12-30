@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of, switchMap } from 'rxjs';
+import { Observable, from, map, of, switchMap } from 'rxjs';
 import { ProfileUser } from '../../shared/models/user-profile';
-import { Firestore, doc, docData, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, doc, docData, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 import { AccountService } from './account.service';
 
 @Injectable({
@@ -24,6 +24,13 @@ export class UsersService {
   }
 
   constructor(private firestore: Firestore, private accountService: AccountService) { }
+
+  getExistedUser(uid: string): Observable<boolean> {
+    const ref = doc(this.firestore, 'users', uid);
+    return from(getDoc(ref)).pipe(
+      map(doc => doc.exists())
+    );
+  }
 
   addUser(user: ProfileUser) : Observable<any> {
     const ref = doc(this.firestore, 'users', user?.uid);
