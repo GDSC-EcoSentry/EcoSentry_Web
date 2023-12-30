@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatDividerModule} from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 
@@ -21,7 +22,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     ReactiveFormsModule,
     MatDividerModule,
     MatToolbarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatCheckboxModule
   ],
   exports: [
     MatIconModule,
@@ -30,7 +32,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     ReactiveFormsModule,
     MatDividerModule,
     MatToolbarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatCheckboxModule
   ]
 })
 export class SharedModule { }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, authState, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, authState, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, browserLocalPersistence, inMemoryPersistence } from '@angular/fire/auth';
 import { from } from 'rxjs';
 
 @Injectable({
@@ -11,7 +11,11 @@ export class AccountService {
 
   constructor(private auth: Auth) { }
 
-  login(username: string, password: string){
+  login(username: string, password: string, isPersisted: boolean){
+    if(isPersisted) {
+      this.auth.setPersistence(browserLocalPersistence);
+    }
+    else this.auth.setPersistence(inMemoryPersistence);
     return from(signInWithEmailAndPassword(this.auth, username, password));
   }
 

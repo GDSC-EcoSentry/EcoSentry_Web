@@ -8,7 +8,7 @@
             <div class="d-grid">
                 <button mat-raised-button style="height: 50px;">
                     <div class="d-flex align-items-center justify-content-center">
-                        <img src="../../../assets/images/Google__G__logo.svg" height="24px" width="24px" class="me-2"> Continue with Google
+                        <img src="../../../assets/images/Google__G__logo.svg" height="24px" width="24px" class="me-2"> Sign in with Google
                     </div>
                 </button>
             </div>
@@ -24,7 +24,11 @@
             <div class="mb-2">
                 <app-text-input [formControl]="loginForm.controls['password']" [type]="'password'" [label]="'Password'"></app-text-input>
             </div>
-            <div class="mb-4"><a routerLink="/account/verify">Forgot your password?</a></div>
+            <div class="d-flex mb-4">
+                <mat-checkbox color="primary" (click)="onChange($event)"><span style="color: #1b5e20;">Remember me</span></mat-checkbox>
+                <div class="flex-grow-1"></div>
+                <div class="d-flex align-items-center"><a routerLink="/account/verify">Forgot password?</a></div>
+            </div>
             <div class="d-grid mb-3">
               <button mat-raised-button color="primary" [disabled]="loginForm.invalid" type="submit" style="height: 50px;">Sign in</button>
             </div>

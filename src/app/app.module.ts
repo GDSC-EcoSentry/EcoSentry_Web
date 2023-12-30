@@ -31,6 +31,7 @@ import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
     MatListModule,
     MatDividerModule,
     HomeModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),

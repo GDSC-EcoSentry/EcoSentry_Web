@@ -3,12 +3,23 @@
         <button mat-icon-button (click)="sidenav.toggle()" class="d-flex align-items-center">
             <mat-icon>menu</mat-icon>
         </button>
-        <span class="ms-3" routerLink="/" style="cursor: pointer; font-size: 20px;">
+        <span class="ms-3" routerLink="/" style="cursor: pointer; font-size: 20px; color: #a7ffeb;">
             <i class="fa fa-leaf"></i> EcoSentry
         </span>
     </div>
     <div class="flex-grow-1"></div>
-    <button mat-button routerLink="/account/login" class="me-2">
-        <i class="fa fa-sign-in"></i> Login
-    </button>
+    <ng-container *ngIf="user$ | async as user; else loginButton">
+        <div class="me-3">
+            <img style="border-radius: 100%; margin-right: 5px; cursor: pointer;" width="40" height="40" 
+                [src]="user.photoURL ?? '../../assets/images/user-placeholder.jpg'" routerLink="/account/profile">
+            <button mat-button routerLink="/account/profile" class="profile-button" color="accent">
+                {{user.username}}
+            </button>
+        </div>
+    </ng-container>
+    <ng-template #loginButton>
+        <button mat-button routerLink="/account/login" class="me-3">
+            <i class="fa fa-sign-in"></i> Login
+        </button>
+    </ng-template>
 </mat-toolbar>

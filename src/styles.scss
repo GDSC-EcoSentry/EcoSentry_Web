@@ -14,7 +14,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @include mat-core();
 
 $my-primary: mat-palette($mat-green, 900);  //#1b5e20
-$my-accent: mat-palette($mat-teal, A400);   //#1de9b6
+$my-accent: mat-palette($mat-teal, A100);   //#a7ffeb
 
 $my-theme: mat-light-theme(
     (

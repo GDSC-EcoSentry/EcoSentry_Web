@@ -19,7 +19,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   ],
   exports: [
     ToolbarComponent,
-    NgxSpinnerModule
+    NgxSpinnerModule,
   ]
 })
 export class CoreModule { }

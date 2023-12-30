@@ -9,6 +9,8 @@ import { AccountService } from '../services/account.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  isPersisted = false;
+
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
@@ -28,13 +30,18 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
+  onChange(event: any) {
+    this.isPersisted = event.target.checked;
+    console.log(this.isPersisted);
+  }
+
   onSubmit(){
     if(!this.loginForm.valid){
       return;
     }
 
     const {email, password} = this.loginForm.value;
-    if(email && password) this.accountService.login(email, password)
+    if(email && password) this.accountService.login(email, password, this.isPersisted)
     .subscribe({
       next: () => this.router.navigateByUrl(''),
       error: error => {
