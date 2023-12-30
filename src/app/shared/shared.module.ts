@@ -8,6 +8,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 
 
@@ -23,7 +24,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatDividerModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   exports: [
     MatIconModule,

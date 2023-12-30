@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AccountService } from '../services/account.service';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-verify-email',
@@ -12,13 +13,23 @@ export class VerifyEmailComponent {
 
   constructor(
     private accountService: AccountService, 
+    private toast: HotToastService
   ) {}
 
   sendVerification(){
     const email = this.verifyEmailControl.value;
-    if(email) this.accountService.forgotPassword(email)
+    if(email) this.accountService.forgotPassword(email).pipe(
+      this.toast.observe({
+        success: 'Email Verification Sent',
+        loading: 'Sending...',
+        error: 'Invalid Email'
+      })
+    )
     .subscribe({
-      error: error => console.log(error)
+      error: error => {
+        console.log(error),
+        this.verifyEmailControl?.setErrors({ invalidEmail: true });
+      }
     })
   }
 }

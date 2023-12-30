@@ -11,4 +11,5 @@
     <div *ngIf="control.errors?.['emailExists']" class="invalid-feedback"> Email address is taken </div>
     <div *ngIf="control.errors?.['passwordNotMatch']" class="invalid-feedback"> Passwords do not match </div>
     <div *ngIf="control.errors?.['invalidCredentials']" class="invalid-feedback"> Wrong Email or Password </div>
+    <div *ngIf="control.errors?.['invalidEmail']" class="invalid-feedback"> Email not found </div>
 </div>

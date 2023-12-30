@@ -5,6 +5,7 @@ import { UsersService } from '../services/users.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ProfileUser } from 'src/app/shared/models/user-profile';
 import { concatMap } from 'rxjs';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @UntilDestroy()
 @Component({
@@ -27,7 +28,8 @@ export class ProfileComponent implements OnInit{
   constructor(
     private imageUploadService: ImageUploadService, 
     private usersService: UsersService,
-    private fb: NonNullableFormBuilder
+    private fb: NonNullableFormBuilder,
+    private toast: HotToastService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +42,11 @@ export class ProfileComponent implements OnInit{
 
   uploadImage(event: any, { uid }: ProfileUser){
     this.imageUploadService.uploadImage(event.target.files[0], `images/profile/${uid}`).pipe(
+      this.toast.observe({
+        success: 'Image uploaded',
+        loading: 'Uploading Image...',
+        error: 'An error occured when uploading image'
+      }),
       concatMap((photoURL) => this.usersService.updateUser({ uid, photoURL }))
     ).subscribe();
   }
@@ -53,6 +60,13 @@ export class ProfileComponent implements OnInit{
 
     this.usersService
       .updateUser({ uid, ...data })
+      .pipe(
+        this.toast.observe({
+          loading: 'Saving profile data...',
+          success: 'Profile updated successfully',
+          error: 'There was an error in updating the profile',
+        })
+      )
       .subscribe();
   }
 }
