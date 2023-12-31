@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
-import { of, switchMap } from 'rxjs';
+import { delay, finalize, of, switchMap } from 'rxjs';
 import { UsersService } from './../services/users.service';
+import { LoaderService } from './../../core/services/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent {
     private fb: NonNullableFormBuilder, 
     private accountService: AccountService, 
     private router: Router,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private loaderService: LoaderService
   ) {}
 
   get email(){
@@ -45,12 +47,23 @@ export class LoginComponent {
         const username = email?.substring(0, email.indexOf('@'));
         this.usersService.getExistedUser(uid).subscribe({
           next: (userExisted) => {
+            this.loaderService.isLoading.next(true);
             if(!userExisted && uid && email && username) {
-              this.usersService.addUser({ uid, email, username }).subscribe({
+              this.usersService.addUser({ uid, email, username })
+              .pipe(
+                delay(1000),
+                finalize(() => this.loaderService.isLoading.next(false))
+              )
+              .subscribe({
                 next: () => this.router.navigateByUrl('')
               });
             }
-            else this.router.navigateByUrl('');
+            else {
+              setTimeout(() => {
+                this.loaderService.isLoading.next(false);
+                this.router.navigateByUrl('');
+              }, 1000);
+            }
           }
         })
       },
@@ -66,14 +79,21 @@ export class LoginComponent {
     }
 
     const {email, password} = this.loginForm.value;
-    if(email && password) this.accountService.login(email, password, this.isPersisted)
-    .subscribe({
-      next: () => this.router.navigateByUrl(''),
-      error: error => {
-        console.log(error);
-        this.email?.setErrors({ invalidCredentials: true });
-        this.password?.setErrors({ invalidCredentials: true });
-      }  
-    });
+    if(email && password) {
+      this.loaderService.isLoading.next(true);
+      this.accountService.login(email, password, this.isPersisted)
+      .pipe(
+        delay(1000),
+        finalize(() => this.loaderService.isLoading.next(false))
+      )
+      .subscribe({
+        next: () => this.router.navigateByUrl(''),
+        error: error => {
+          console.log(error);
+          this.email?.setErrors({ invalidCredentials: true });
+          this.password?.setErrors({ invalidCredentials: true });
+        }  
+      });
+    }
   }
 }

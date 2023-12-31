@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from './account/services/account.service';
 import { Router } from '@angular/router';
 import { LoaderService } from './core/services/loader.service';
-import { HttpClient } from '@angular/common/http';
+import { delay, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +22,13 @@ export class AppComponent implements OnInit{
   }
 
   logout(){
-    this.accountService.logout().subscribe({
+    this.loaderService.isLoading.next(true);
+    this.accountService.logout()
+    .pipe(
+      delay(1000),
+      finalize(() => this.loaderService.isLoading.next(false))
+    )
+    .subscribe({
       next: () => this.router.navigateByUrl('/account/login'),
       error: error => console.log(error)
     })

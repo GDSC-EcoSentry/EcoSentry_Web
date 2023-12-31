@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import {  AbstractControl, AsyncValidatorFn, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { debounceTime, finalize, map, of, switchMap, take } from 'rxjs';
+import { debounceTime, delay, finalize, map, of, switchMap, take } from 'rxjs';
 import { AccountService } from '../services/account.service';
 import { Router } from '@angular/router';
 import { UsersService } from '../services/users.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class RegisterComponent {
     private fb: NonNullableFormBuilder, 
     private accountService: AccountService, 
     private router: Router, 
-    private usersService: UsersService
+    private usersService: UsersService,
+    private loaderService: LoaderService
   ) {}
 
   onSubmit(){
@@ -34,7 +36,10 @@ export class RegisterComponent {
 
     const { username, email, password } = this.registerForm.value;
     if(username && email && password) {
+      this.loaderService.isLoading.next(true);
       this.accountService.register(email, password).pipe(
+        delay(1000),
+        finalize(() => this.loaderService.isLoading.next(false)),
         switchMap(({ user: { uid } }) => this.usersService.addUser({ uid, email, username }))
       ).subscribe({
         next: () => this.router.navigateByUrl(''),
@@ -53,12 +58,23 @@ export class RegisterComponent {
         const username = email?.substring(0, email.indexOf('@'));
         this.usersService.getExistedUser(uid).subscribe({
           next: (userExisted) => {
+            this.loaderService.isLoading.next(true);
             if(!userExisted && uid && email && username) {
-              this.usersService.addUser({ uid, email, username }).subscribe({
+              this.usersService.addUser({ uid, email, username })
+              .pipe(
+                delay(1000),
+                finalize(() => this.loaderService.isLoading.next(false))
+              )
+              .subscribe({
                 next: () => this.router.navigateByUrl('')
               });
             }
-            else this.router.navigateByUrl('');
+            else {
+              setTimeout(() => {
+                this.loaderService.isLoading.next(false);
+                this.router.navigateByUrl('');
+              }, 1000);
+            }
           }
         })
       },

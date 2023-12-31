@@ -16,8 +16,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment.development';
 import { provideHotToastConfig } from '@ngneat/hot-toast';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -49,7 +48,6 @@ import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
         color: '#1b5e20',
       },
     }),
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
