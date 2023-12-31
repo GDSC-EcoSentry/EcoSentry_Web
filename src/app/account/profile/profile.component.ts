@@ -4,9 +4,8 @@ import { ImageUploadService } from '../services/image-upload.service';
 import { UsersService } from '../services/users.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ProfileUser } from 'src/app/shared/models/user-profile';
-import { concatMap, delay, finalize } from 'rxjs';
+import { concatMap } from 'rxjs';
 import { HotToastService } from '@ngneat/hot-toast';
-import { LoaderService } from 'src/app/core/services/loader.service';
 
 @UntilDestroy()
 @Component({
@@ -31,17 +30,13 @@ export class ProfileComponent implements OnInit{
     private usersService: UsersService,
     private fb: NonNullableFormBuilder,
     private toast: HotToastService,
-    private loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
-    this.loaderService.isLoading.next(true);
     this.usersService.currentUserProfile$.pipe(
-      delay(1000),
       untilDestroyed(this)
     ).subscribe((user) => {
       this.profileForm.patchValue({ ...user });
-      this.loaderService.isLoading.next(false);
     });
   }
 
