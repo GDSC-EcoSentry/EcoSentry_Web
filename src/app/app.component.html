@@ -16,7 +16,7 @@
             <div routerLink="/account/profile">
                 <mat-list-item><span class="ms-3"><i class="fa fa-user-circle-o me-2"></i>Profile</span></mat-list-item>
             </div>
-            <div class="sidenav-footer" routerLink="/account/sign-out" (click)="logout()">
+            <div class="sidenav-footer" routerLink="/account/sign-out" (click)="logout()" *ngIf="user$ | async">
                 <mat-divider></mat-divider>
                 <mat-list-item><span class="ms-3"><i class="fa fa-sign-out me-2"></i>Sign Out</span></mat-list-item>
             </div>

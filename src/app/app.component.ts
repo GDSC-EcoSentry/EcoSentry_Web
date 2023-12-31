@@ -3,6 +3,7 @@ import { AccountService } from './account/services/account.service';
 import { Router } from '@angular/router';
 import { LoaderService } from './core/services/loader.service';
 import { delay, finalize } from 'rxjs';
+import { UsersService } from './account/services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +11,13 @@ import { delay, finalize } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  title = 'EcoSentry';
+  user$ = this.usersService.currentUserProfile$;
 
   constructor(
     private accountService: AccountService, 
     private router: Router,
     public loaderService: LoaderService,
+    private usersService: UsersService
   ) {}
 
   ngOnInit() {
