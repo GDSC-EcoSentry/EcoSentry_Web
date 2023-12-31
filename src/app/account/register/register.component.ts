@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {  AbstractControl, AsyncValidatorFn, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { debounceTime, delay, finalize, map, of, switchMap, take } from 'rxjs';
 import { AccountService } from '../services/account.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../services/users.service';
 
 
@@ -13,7 +13,8 @@ import { UsersService } from '../services/users.service';
 })
 
 export class RegisterComponent{
-  complexPassword = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)(?=.*[@*#!%^&$~_:/?><,.\|]*.*)[0-9a-zA-Z@*#!%^&$~_:/?><,.\|]{6,}$"
+  complexPassword = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)(?=.*[@*#!%^&$~_:/?><,.\|]*.*)[0-9a-zA-Z@*#!%^&$~_:/?><,.\|]{6,}$";
+  returnUrl: string;
 
   registerForm = this.fb.group({
     username: ['', Validators.required],
@@ -27,7 +28,26 @@ export class RegisterComponent{
     private accountService: AccountService, 
     private router: Router, 
     private usersService: UsersService,
-  ) {}
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || ''
+  }
+
+  get name() {
+    return this.registerForm.get('name');
+  }
+
+  get email() {
+    return this.registerForm.get('email');
+  }
+
+  get password() {
+    return this.registerForm.get('password');
+  }
+
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword');
+  }
 
   onSubmit(){
     if(!this.registerForm.valid) return;
@@ -38,7 +58,7 @@ export class RegisterComponent{
         switchMap(({ user: { uid } }) => this.usersService.addUser({ uid, email, username }))
       ).subscribe({
         next: () => {
-          this.router.navigateByUrl('');
+          this.router.navigateByUrl(this.returnUrl);
         },
         error: error => {
           console.log(error);
@@ -59,12 +79,12 @@ export class RegisterComponent{
               this.usersService.addUser({ uid, email, username })
               .subscribe({
                 next: () => {
-                  this.router.navigateByUrl('');
+                  this.router.navigateByUrl(this.returnUrl);
                 }
               });
             }
             else {
-              this.router.navigateByUrl('');
+              this.router.navigateByUrl(this.returnUrl);
             }
           }
         })
@@ -73,22 +93,6 @@ export class RegisterComponent{
         console.log(error);
       }
     });
-  }
-
-  get name() {
-    return this.registerForm.get('name');
-  }
-
-  get email() {
-    return this.registerForm.get('email');
-  }
-
-  get password() {
-    return this.registerForm.get('password');
-  }
-
-  get confirmPassword() {
-    return this.registerForm.get('confirmPassword');
   }
 
   validatePasswordNotMatch(): AsyncValidatorFn {

@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
     this.accountService.logout()
     .subscribe({
       next: () => {
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('/account/login');
       },
       error: error => console.log(error)
     })

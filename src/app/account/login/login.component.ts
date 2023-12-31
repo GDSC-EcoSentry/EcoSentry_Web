@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { UsersService } from './../services/users.service';
 
@@ -12,6 +12,7 @@ import { UsersService } from './../services/users.service';
 })
 export class LoginComponent{
   isPersisted = false;
+  returnUrl: string;
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -23,7 +24,10 @@ export class LoginComponent{
     private accountService: AccountService, 
     private router: Router,
     private usersService: UsersService,
-  ) {}
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || ''
+  }
 
   get email(){
     return this.loginForm.get('email');
@@ -49,12 +53,12 @@ export class LoginComponent{
               this.usersService.addUser({ uid, email, username })
               .subscribe({
                 next: () => {
-                  this.router.navigateByUrl('');
+                  this.router.navigateByUrl(this.returnUrl);
                 }
               });
             }
             else {
-              this.router.navigateByUrl('');
+              this.router.navigateByUrl(this.returnUrl);
             }
           }
         })
@@ -75,7 +79,7 @@ export class LoginComponent{
       this.accountService.login(email, password, this.isPersisted)
       .subscribe({
         next: () => {
-          this.router.navigateByUrl('');
+          this.router.navigateByUrl(this.returnUrl);
         },
         error: error => {
           console.log(error);
