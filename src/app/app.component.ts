@@ -29,7 +29,10 @@ export class AppComponent implements OnInit{
       finalize(() => this.loaderService.isLoading.next(false))
     )
     .subscribe({
-      next: () => this.router.navigateByUrl('/account/login'),
+      next: () => {
+        this.router.navigateByUrl('');
+        this.loaderService.isLoading.next(false)
+      },
       error: error => console.log(error)
     })
   }

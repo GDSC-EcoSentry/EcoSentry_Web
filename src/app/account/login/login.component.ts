@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
@@ -11,7 +11,7 @@ import { LoaderService } from './../../core/services/loader.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   isPersisted = false;
 
   loginForm = this.fb.group({
@@ -35,6 +35,13 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
+  ngOnInit(): void {
+    this.loaderService.isLoading.next(true);
+    setTimeout(() => {
+      this.loaderService.isLoading.next(false);
+    }, 1000);
+  }
+
   onChange(event: any) {
     this.isPersisted = event.target.checked;
     console.log(this.isPersisted);
@@ -52,10 +59,12 @@ export class LoginComponent {
               this.usersService.addUser({ uid, email, username })
               .pipe(
                 delay(1000),
-                finalize(() => this.loaderService.isLoading.next(false))
               )
               .subscribe({
-                next: () => this.router.navigateByUrl('')
+                next: () => {
+                  this.router.navigateByUrl('');
+                  this.loaderService.isLoading.next(false)
+                }
               });
             }
             else {
@@ -84,10 +93,12 @@ export class LoginComponent {
       this.accountService.login(email, password, this.isPersisted)
       .pipe(
         delay(1000),
-        finalize(() => this.loaderService.isLoading.next(false))
       )
       .subscribe({
-        next: () => this.router.navigateByUrl(''),
+        next: () => {
+          this.router.navigateByUrl('');
+          this.loaderService.isLoading.next(false)
+        },
         error: error => {
           console.log(error);
           this.email?.setErrors({ invalidCredentials: true });

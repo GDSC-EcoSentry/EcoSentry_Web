@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {  AbstractControl, AsyncValidatorFn, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { debounceTime, delay, finalize, map, of, switchMap, take } from 'rxjs';
 import { AccountService } from '../services/account.service';
@@ -13,7 +13,7 @@ import { LoaderService } from 'src/app/core/services/loader.service';
   styleUrls: ['./register.component.scss']
 })
 
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
   complexPassword = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)(?=.*[@*#!%^&$~_:/?><,.\|]*.*)[0-9a-zA-Z@*#!%^&$~_:/?><,.\|]{6,}$"
 
   registerForm = this.fb.group({
@@ -31,6 +31,13 @@ export class RegisterComponent {
     private loaderService: LoaderService
   ) {}
 
+  ngOnInit(): void {
+    this.loaderService.isLoading.next(true);
+    setTimeout(() => {
+      this.loaderService.isLoading.next(false);
+    }, 1000);
+  }
+
   onSubmit(){
     if(!this.registerForm.valid) return;
 
@@ -39,10 +46,12 @@ export class RegisterComponent {
       this.loaderService.isLoading.next(true);
       this.accountService.register(email, password).pipe(
         delay(1000),
-        finalize(() => this.loaderService.isLoading.next(false)),
         switchMap(({ user: { uid } }) => this.usersService.addUser({ uid, email, username }))
       ).subscribe({
-        next: () => this.router.navigateByUrl(''),
+        next: () => {
+          this.router.navigateByUrl('');
+          this.loaderService.isLoading.next(false)
+        },
         error: error => {
           console.log(error);
           this.email?.setErrors({ emailExists: true });
@@ -63,10 +72,12 @@ export class RegisterComponent {
               this.usersService.addUser({ uid, email, username })
               .pipe(
                 delay(1000),
-                finalize(() => this.loaderService.isLoading.next(false))
               )
               .subscribe({
-                next: () => this.router.navigateByUrl('')
+                next: () => {
+                  this.router.navigateByUrl('');
+                  this.loaderService.isLoading.next(false)
+                }
               });
             }
             else {
