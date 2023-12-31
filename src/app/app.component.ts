@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from './account/services/account.service';
 import { Router } from '@angular/router';
+import { LoaderService } from './core/services/loader.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,7 @@ export class AppComponent implements OnInit{
   constructor(
     private accountService: AccountService, 
     private router: Router,
+    public loaderService: LoaderService,
   ) {}
 
   ngOnInit() {

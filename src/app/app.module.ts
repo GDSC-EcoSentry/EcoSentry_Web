@@ -15,6 +15,9 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment.development';
 import { provideHotToastConfig } from '@ngneat/hot-toast';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 
 
 @NgModule({
@@ -30,6 +33,8 @@ import { provideHotToastConfig } from '@ngneat/hot-toast';
     MatListModule,
     MatDividerModule,
     HomeModule,
+    MatProgressBarModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),
@@ -43,7 +48,8 @@ import { provideHotToastConfig } from '@ngneat/hot-toast';
         padding: '10px',
         color: '#1b5e20',
       },
-    })
+    }),
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

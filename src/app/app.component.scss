@@ -16,3 +16,9 @@ mat-nav-list span{
 .sidenav-footer{
     margin-top: 60vh;
 }
+
+.loader-container{
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}
