@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment.development';
 import { provideHotToastConfig } from '@ngneat/hot-toast';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -28,10 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
-    MatSidenavModule,
-    MatListModule,
-    MatDividerModule,
     HomeModule,
+    SharedModule,
     MatProgressBarModule,
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),

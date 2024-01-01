@@ -2,29 +2,38 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import { TextInputComponent } from './text-input/text-input.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { TextInputComponent } from './components/text-input/text-input.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDividerModule} from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { HotToastModule } from '@ngneat/hot-toast';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { PagerComponent } from './components/pager/pager.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import {MatSelectModule} from '@angular/material/select';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { TextAutocompleteComponent } from './components/text-autocomplete/text-autocomplete.component';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
   declarations: [
-    TextInputComponent
+    TextInputComponent,
+    PagerComponent,
+    TextAutocompleteComponent
   ],
   imports: [
     CommonModule,
-    MatIconModule,
-    MatButtonModule,
     ReactiveFormsModule,
     MatDividerModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    PaginationModule.forRoot(),
+    MatSelectModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatIconModule,
@@ -34,7 +43,15 @@ import { HotToastModule } from '@ngneat/hot-toast';
     MatDividerModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    PaginationModule,
+    FormsModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    TextAutocompleteComponent,
+    MatListModule
   ]
 })
 export class SharedModule { }
