@@ -1,6 +1,6 @@
 <div class="mt-5 ms-5">
     <h2 class="title">Dashboard</h2>
-    <div class="d-flex mt-3 mb-4">
+    <div class="d-flex mt-5 mb-4">
         <div class="search-node me-3">
             <app-text-autocomplete
                 [type]="'text'"
@@ -14,36 +14,30 @@
                 </mat-option>
             </mat-autocomplete>
         </div>
-        <ng-container *ngIf="selectedStation$ | async else noStation">
-            <div class="search-node me-3">
-                <app-text-autocomplete
-                    [type]="'text'"
-                    [label]="'Search for node...'"
-                    [formControl]="searchNodesControl"
-                    [autocomplete]="nodes"
-                ></app-text-autocomplete>
-                <mat-autocomplete #nodes="matAutocomplete">
-                    <mat-option *ngFor="let node of nodes$ | async" [value]="node.name">
-                        {{node.name}}
-                    </mat-option>
-                </mat-autocomplete>
-            </div>
-            <div class="select me-3">
-                <mat-form-field>
-                    <mat-label>Flammability</mat-label>
-                    <mat-select>
-                        <mat-option *ngFor="let chance of chances" [value]="chance.value">{{chance.name}}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-            </div>
-        </ng-container>
-    </div>
-    <ng-template #noStation>
-        <div class="pt-3">
-            <h4>Please select a station</h4>
+        <div class="search-node me-3">
+            <app-text-autocomplete
+                [type]="'text'"
+                [label]="'Search for node...'"
+                [formControl]="searchNodesControl"
+                [autocomplete]="nodes"
+            ></app-text-autocomplete>
+            <mat-autocomplete #nodes="matAutocomplete">
+                <mat-option *ngFor="let nodeWithLatestData of nodesWithLatestData$ | async" [value]="nodeWithLatestData.name">
+                    {{nodeWithLatestData.name}}
+                </mat-option>
+            </mat-autocomplete>
         </div>
-    </ng-template>
-    <div *ngIf="selectedStation$ | async as selectedStation">
-        <h3>{{selectedStation.name}}</h3>
+        <div class="select me-3">
+            <mat-form-field>
+                <mat-label>Flammability</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let chance of chances" [value]="chance.value">{{chance.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
     </div>
+    <div *ngIf="selectedStation$ | async as selectedStation">
+        <h3>{{selectedStation.name}}: {{selectedStation.location}}</h3>
+    </div>
+
 </div>

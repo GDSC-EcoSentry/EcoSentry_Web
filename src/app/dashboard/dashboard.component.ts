@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject, combineLatest, map, of, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, of, startWith, switchMap, take } from 'rxjs';
 import { DashboardService } from './dashboard.service';
 
 @Component({
@@ -28,32 +28,48 @@ export class DashboardComponent {
     map(([stations, searchString]) => stations.filter(s => s.name?.toLowerCase().includes((searchString ?? '').toLowerCase())))
   )
 
-  selectedStation$ = this.selectedStationId$.pipe(
-    switchMap((stationId) => {
+  selectedStation$ = combineLatest([this.dashboardService.allStations$, this.selectedStationId$]).pipe(
+    map(([stations, stationId]) => {
       if (stationId) {
-        return this.dashboardService.allStations$.pipe(
-          map((stations) => stations.find((s) => s.id === stationId))
-        );
+        return stations.find((s) => s.id === stationId);
       } else {
-        return of(null);
+        return stations.length > 0 ? stations[0] : null;
       }
     })
   );
 
-  nodes$ = combineLatest([
-    this.selectedStationId$.pipe(
-      switchMap((stationId) => {
-        if (stationId) {
-          return this.dashboardService.getAllNodes$(stationId);
-        } else {
-          return of(null);
+  // ...
+
+nodes$ = combineLatest([
+  this.selectedStation$.pipe(
+    switchMap((station) => {
+      if (station) {
+        return this.dashboardService.getAllNodes$(station.id);
+      } else {
+        return of([]);
         }
       })
     ),
     this.searchNodesControl.valueChanges.pipe(startWith(''))
   ]).pipe(
     map(([nodes, searchString]) => nodes?.filter(n => n.name?.toLowerCase().includes((searchString ?? '').toLowerCase())))
-  )
+  );
+
+  nodesWithLatestData$ = combineLatest([this.nodes$, this.selectedStation$]).pipe(
+    switchMap(([nodes, station]) => {
+      if (!station) {
+        return of([]);
+      }
+
+      const latestDataObservables = (nodes || []).map((node) => {
+        return this.dashboardService.getLatestData$(station.id, node.id).pipe(
+          map((latestData) => ({ ...node, latestData }))
+        );
+      });
+  
+      return combineLatest(latestDataObservables);
+    })
+  );
 
   constructor(private dashboardService: DashboardService) {}
 

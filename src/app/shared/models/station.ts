@@ -15,9 +15,10 @@ export interface Node {
     geopoint: GeoPoint;
     lastUpdate: Date | Timestamp;
     chance: string;
+    latestData: Data | null;
 }
 
-export interface Datum {
+export interface Data {
     temperature: number;
     humidity: number;
     smoke: number;
