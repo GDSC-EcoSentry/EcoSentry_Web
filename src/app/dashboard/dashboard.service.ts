@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData,  doc,  getDocs, limit, orderBy, query, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData,  doc,  getDocs, limit, orderBy, query, startAt,  where } from '@angular/fire/firestore';
 import { Data, Node, Station } from '../shared/models/station';
-import { Observable, from, map } from 'rxjs';
+import { Observable, from, map, switchMap } from 'rxjs';
+import { NodeParams } from '../shared/models/nodeParams';
 
 
 @Injectable({
@@ -17,10 +18,33 @@ export class DashboardService {
     return collectionData(queryAll, {idField: 'id'}) as Observable<Station[]>;
   }
 
-  getAllNodes$(stationId: string): Observable<Node[] | null> {
-    const ref = collection(this.firestore, 'stations', stationId, 'nodes');
-    const queryAll = query(ref, orderBy('name', 'asc'));
+  getAllFilteredNodes$(nodeParams: NodeParams): Observable<Node[] | null> {
+    const ref = collection(this.firestore, 'stations', nodeParams.stationId, 'nodes');
+    const queryAll = query(ref, 
+      orderBy('name', 'asc'));
     return collectionData(queryAll, {idField: 'id'}) as Observable<Node[]>
+  }
+
+  getFilteredNodes$(nodeParams: NodeParams): Observable<Node[] | null> {
+    const ref = collection(this.firestore, 'stations', nodeParams.stationId, 'nodes');
+  
+    const myQuery = query(
+      ref, 
+      orderBy(nodeParams.sort, (nodeParams.sortOrder === 'asc') ? 'asc' : 'desc'),
+    );
+
+    return from(getDocs(myQuery)).pipe(
+      switchMap(querySnapshot => {
+        const lastVisible = querySnapshot.docs[(nodeParams.pageNumber - 1) * nodeParams.pageSize];
+        const next = query(
+          ref,
+          orderBy(nodeParams.sort, (nodeParams.sortOrder === 'asc') ? 'asc' : 'desc'),
+          startAt(lastVisible),
+          limit(nodeParams.pageSize)
+        );
+        return collectionData(next, { idField: 'id' }) as Observable<Node[]>;
+      })
+    )
   }
 
   getLatestData$(stationId: string, nodeId: string): Observable<Data | null> {
@@ -32,7 +56,6 @@ export class DashboardService {
         if(querySnapshot.size > 0) {
           const dataDoc = querySnapshot.docs[0];
           const latestData = {...dataDoc.data() } as Data;
-          updateDoc(nodeRef, {latestData});
           return latestData;
         }
         else {

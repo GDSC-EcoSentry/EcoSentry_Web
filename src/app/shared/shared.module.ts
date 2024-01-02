@@ -51,7 +51,8 @@ import {MatListModule} from '@angular/material/list';
     MatSelectModule,
     MatAutocompleteModule,
     TextAutocompleteComponent,
-    MatListModule
+    MatListModule,
+    PagerComponent
   ]
 })
 export class SharedModule { }
