@@ -13,7 +13,6 @@ export interface Node {
     id: string;
     name: string;
     geopoint: GeoPoint;
-    lastUpdate: Date | Timestamp;
     chance: string;
     latestData: Data | null;
 }

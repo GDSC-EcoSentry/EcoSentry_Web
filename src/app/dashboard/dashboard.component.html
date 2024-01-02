@@ -22,8 +22,8 @@
                 [autocomplete]="nodes"
             ></app-text-autocomplete>
             <mat-autocomplete #nodes="matAutocomplete">
-                <mat-option *ngFor="let nodeWithLatestData of nodesWithLatestData$ | async" [value]="nodeWithLatestData.name">
-                    {{nodeWithLatestData.name}}
+                <mat-option *ngFor="let node of nodes$ | async" [value]="node.name">
+                    {{node.name}}
                 </mat-option>
             </mat-autocomplete>
         </div>
@@ -39,5 +39,27 @@
     <div *ngIf="selectedStation$ | async as selectedStation">
         <h3>{{selectedStation.name}}: {{selectedStation.location}}</h3>
     </div>
-
-</div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="bg-light text-uppercase">
+                <tr>
+                    <th><div class="py-2">Name</div></th>
+                    <th><div class="py-2">Temperature</div></th>
+                    <th><div class="py-2">Humidity</div></th>
+                    <th><div class="py-2">Smoke(CO)</div></th>
+                    <th><div class="py-2">Flammability</div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let node of nodesWithLatestData$ | async">
+                    <th>
+                        {{node.name}}
+                    </th>
+                    <td class="align-middle">{{node.latestData?.temperature}}</td>
+                    <td class="align-middle">{{node.latestData?.humidity}}</td>
+                    <td class="align-middle">{{node.latestData?.smoke}}</td>
+                    <td class="align-middle">{{node.chance}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>

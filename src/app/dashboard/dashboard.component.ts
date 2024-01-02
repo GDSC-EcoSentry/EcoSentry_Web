@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject, combineLatest, map, of, startWith, switchMap, take } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map, of, startWith, switchMap, take } from 'rxjs';
 import { DashboardService } from './dashboard.service';
+import { Node } from '../shared/models/station';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,22 +39,22 @@ export class DashboardComponent {
     })
   );
 
-  // ...
-
-nodes$ = combineLatest([
-  this.selectedStation$.pipe(
-    switchMap((station) => {
-      if (station) {
-        return this.dashboardService.getAllNodes$(station.id);
-      } else {
-        return of([]);
-        }
-      })
-    ),
-    this.searchNodesControl.valueChanges.pipe(startWith(''))
-  ]).pipe(
-    map(([nodes, searchString]) => nodes?.filter(n => n.name?.toLowerCase().includes((searchString ?? '').toLowerCase())))
-  );
+  nodes$ = combineLatest([
+    this.selectedStation$.pipe(
+      switchMap((station) => {
+        if (station) {
+          return this.dashboardService.getAllNodes$(station.id);
+        } else {
+          return of([]);
+          }
+        })
+      ),
+      this.searchNodesControl.valueChanges.pipe(startWith(''))
+    ]).pipe(
+      map(
+        ([nodes, searchString]) => 
+          nodes?.filter(n => n.name?.toLowerCase().includes((searchString ?? '').toLowerCase())))
+      );
 
   nodesWithLatestData$ = combineLatest([this.nodes$, this.selectedStation$]).pipe(
     switchMap(([nodes, station]) => {
@@ -67,7 +68,7 @@ nodes$ = combineLatest([
         );
       });
   
-      return combineLatest(latestDataObservables);
+      return combineLatest(latestDataObservables) as Observable<Node[]>;
     })
   );
 
@@ -75,6 +76,7 @@ nodes$ = combineLatest([
 
   getSelectedStationId(stationId: string) {
     this.selectedStationId.next(stationId);
+    this.searchNodesControl.setValue('');
   }
 
 }
