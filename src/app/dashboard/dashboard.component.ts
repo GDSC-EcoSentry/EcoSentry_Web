@@ -67,19 +67,16 @@ export class DashboardComponent {
     this.searchChanceControl.valueChanges.pipe(startWith('')),
   ]).pipe(
     switchMap(([station, search, chance]) => {
-      if (station) {
-        this.nodeParams.stationId = station.id;
+      this.nodeParams.stationId = station ? station.id : '';
+        this.nodeParams.search = search ?? '';
+        this.nodeParams.chance = chance ?? '';
+
         return this.dashboardService.getAllFilteredNodes$(this.nodeParams).pipe(
           map((nodes) => {
-            nodes = nodes?.filter(n => n.name?.toLowerCase().includes((search ?? '').toLowerCase()) 
-              && n.chance.includes(chance ?? '')) ?? null;
-            if(nodes) this.totalCount = nodes?.length;
+            this.totalCount = nodes?.length ?? 0;
             return nodes;
           })
         );
-      } else {
-        return of(null);
-        }
       })
     );
     
@@ -95,21 +92,17 @@ export class DashboardComponent {
         tap(() => this.onPageChanged(1)),
         startWith('')
       ),
+      this.pageChanged$.pipe(startWith(1)),
       this.sortControl.valueChanges.pipe(startWith('name')),
-      this.sortOrderControl.valueChanges.pipe(startWith('asc')),
-      this.pageChanged$.pipe(startWith(1))
+      this.sortOrderControl.valueChanges.pipe(startWith('asc'))
     ]).pipe(
-      switchMap(([station, search, chance, sort, sortOrder, page]) => {
+      switchMap(([station, search, chance, page]) => {
         this.nodeParams.stationId = station ? station.id : '';
-        this.nodeParams.sort = sort || 'name';
-        this.nodeParams.sortOrder = sortOrder || 'asc';
+        this.nodeParams.search = search ?? '';
+        this.nodeParams.chance = chance ?? '';
         this.nodeParams.pageNumber = page;
         
-        return this.dashboardService.getFilteredNodes$(this.nodeParams).pipe(
-          map(nodes => nodes?.filter(n => n.name?.toLowerCase().includes((search ?? '').toLowerCase()) 
-            && n.chance.includes(chance ?? '')) ?? null
-          )
-        );
+        return this.dashboardService.getFilteredNodes$(this.nodeParams);
       })
     );
 
@@ -121,7 +114,7 @@ export class DashboardComponent {
 
       const latestDataObservables = (nodes || []).map((node) => {
         return this.dashboardService.getLatestData$(station.id, node.id).pipe(
-          map((latestData) => ({ ...node, latestData }))
+          map((latestData) => ({ ...node, ...latestData }))
         );
       });
   

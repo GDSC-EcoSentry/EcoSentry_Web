@@ -14,7 +14,10 @@ export interface Node {
     name: string;
     geopoint: GeoPoint;
     chance: string;
-    latestData: Data | null;
+    temperature: number;
+    humidity: number;
+    smoke: number;
+    date: Date | Timestamp;
 }
 
 export interface Data {

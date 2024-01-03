@@ -73,9 +73,9 @@
                 <tbody>
                     <tr *ngFor="let node of nodesWithLatestData$ | async">
                         <th>{{node.name}}</th>
-                        <td class="align-middle">{{node.latestData?.temperature}}</td>
-                        <td class="align-middle">{{node.latestData?.humidity}}</td>
-                        <td class="align-middle">{{node.latestData?.smoke}}</td>
+                        <td class="align-middle">{{node.temperature}}</td>
+                        <td class="align-middle">{{node.humidity}}</td>
+                        <td class="align-middle">{{node.smoke}}</td>
                         <td class="align-middle">{{node.chance}}</td>
                     </tr>
                 </tbody>

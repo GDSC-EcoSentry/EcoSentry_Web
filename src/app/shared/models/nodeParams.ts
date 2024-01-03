@@ -1,7 +1,7 @@
 export class NodeParams {
+    search = '';
+    chance = '';
     stationId = '';
-    sort = 'name';
-    sortOrder = 'asc';
     pageNumber = 1;
     pageSize = 5;
 }
