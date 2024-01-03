@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject, Observable, combineLatest, from, map, of, startWith, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map, of, startWith, switchMap, tap } from 'rxjs';
 import { DashboardService } from './dashboard.service';
 import { Node } from '../shared/models/station';
 import { NodeParams } from '../shared/models/nodeParams';
@@ -10,19 +10,11 @@ import { NodeParams } from '../shared/models/nodeParams';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent{
   searchStationsControl = new FormControl('');
-  searchNodesControl = new FormControl('');
-  searchChanceControl = new FormControl('');
   sortControl = new FormControl('');
   sortOrderControl = new FormControl('');
   totalCount = 0;
-
-  chances = [
-    {name: 'High', value: 'High'},
-    {name: 'Medium', value: 'Medium'},
-    {name: 'Low', value: 'Low'},
-  ];
 
   sorts = [
     {name: 'Name', value: 'name'},
@@ -61,72 +53,58 @@ export class DashboardComponent {
     })
   );
 
-  allNodes$ = combineLatest([
-    this.selectedStation$,
-    this.searchNodesControl.valueChanges.pipe(startWith('')),
-    this.searchChanceControl.valueChanges.pipe(startWith('')),
-  ]).pipe(
-    switchMap(([station, search, chance]) => {
-      this.nodeParams.stationId = station ? station.id : '';
-        this.nodeParams.search = search ?? '';
-        this.nodeParams.chance = chance ?? '';
-
-        return this.dashboardService.getAllFilteredNodes$(this.nodeParams).pipe(
+  allNodes$ = this.selectedStation$.pipe(
+    switchMap((station) => {
+      if(station) {
+        return this.dashboardService.getAllNodes$(station.id).pipe(
           map((nodes) => {
             this.totalCount = nodes?.length ?? 0;
             return nodes;
           })
         );
-      })
-    );
-    
-  
-
-  filteredNodes$ = combineLatest([
-      this.selectedStation$,
-      this.searchNodesControl.valueChanges.pipe(
-        tap(() => this.onPageChanged(1)),
-        startWith('')
-      ),
-      this.searchChanceControl.valueChanges.pipe(
-        tap(() => this.onPageChanged(1)),
-        startWith('')
-      ),
-      this.pageChanged$.pipe(startWith(1)),
-      this.sortControl.valueChanges.pipe(startWith('name')),
-      this.sortOrderControl.valueChanges.pipe(startWith('asc'))
-    ]).pipe(
-      switchMap(([station, search, chance, page]) => {
-        this.nodeParams.stationId = station ? station.id : '';
-        this.nodeParams.search = search ?? '';
-        this.nodeParams.chance = chance ?? '';
-        this.nodeParams.pageNumber = page;
-        
-        return this.dashboardService.getFilteredNodes$(this.nodeParams);
-      })
-    );
-
-  nodesWithLatestData$ = combineLatest([this.filteredNodes$, this.selectedStation$]).pipe(
-    switchMap(([nodes, station]) => {
-      if (!station || !nodes) {
-        return of(null);
       }
-
-      const latestDataObservables = (nodes || []).map((node) => {
-        return this.dashboardService.getLatestData$(station.id, node.id).pipe(
-          map((latestData) => ({ ...node, ...latestData }))
-        );
-      });
-  
-      return combineLatest(latestDataObservables) as Observable<Node[]>;
+      return of(null);
     })
   );
+
+  filteredNodes$ = combineLatest([
+      //All of the value changes that will trigger this observable
+      this.selectedStation$,
+      this.pageChanged$.pipe(startWith(1)),
+      this.sortControl.valueChanges.pipe(startWith('name')).pipe(
+        tap(() => this.onPageChanged(1)),
+        startWith('')
+      ),
+      this.sortOrderControl.valueChanges.pipe(startWith('asc')).pipe(
+        tap(() => this.onPageChanged(1)),
+        startWith('')
+      )
+    ]).pipe(
+      switchMap(([station, page, sort, sortOrder]) => {
+        this.nodeParams.stationId = station ? station.id : '';
+        this.nodeParams.sort = sort ? sort : '';
+        this.nodeParams.sortOrder = sortOrder ? sortOrder : '';
+        this.nodeParams.pageNumber = page;
+        
+        //Get the filtered nodes and update the latest data to it.
+        return this.dashboardService.getFilteredNodes$(this.nodeParams).pipe(
+          switchMap((nodes) => {
+            const latestDataObservables = (nodes || []).map((node) => {
+              return this.dashboardService.getLatestData$(this.nodeParams.stationId, node.id).pipe(
+                map((latestData) => ({ ...node, ...latestData }))
+              );
+            });
+        
+            return combineLatest(latestDataObservables) as Observable<Node[]>;
+          })
+        );
+      })
+    );
 
   constructor(private dashboardService: DashboardService) {}
 
   getSelectedStationId(stationId: string) {
     this.selectedStationId.next(stationId);
-    this.searchNodesControl.setValue('');
   }
 
   onPageChanged(event: any){
@@ -134,13 +112,5 @@ export class DashboardComponent {
       this.nodeParams.pageNumber = event;
       this.pageChanged.next(event);
     }
-  }
-
-  resetSearch(){
-    this.searchNodesControl.setValue('');
-    this.searchChanceControl.setValue('');
-    this.sortControl.setValue('');
-    this.sortOrderControl.setValue('');
-    this.nodeParams.pageNumber = 1;
   }
 }

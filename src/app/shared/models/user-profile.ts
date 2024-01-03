@@ -7,4 +7,5 @@ export interface ProfileUser {
     lastName?: string;
     phone?: string;
     address?: string;
+    role?: string;
 }

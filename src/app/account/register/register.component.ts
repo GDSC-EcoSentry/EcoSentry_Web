@@ -55,7 +55,7 @@ export class RegisterComponent{
     const { username, email, password } = this.registerForm.value;
     if(username && email && password) {
       this.accountService.register(email, password).pipe(
-        switchMap(({ user: { uid } }) => this.usersService.addUser({ uid, email, username }))
+        switchMap(({ user: { uid } }) => this.usersService.addUser({ uid, email, username, role: 'user' }))
       ).subscribe({
         next: () => {
           this.router.navigateByUrl(this.returnUrl);
@@ -76,7 +76,7 @@ export class RegisterComponent{
         this.usersService.getExistedUser(uid).subscribe({
           next: (userExisted) => {
             if(!userExisted && uid && email && username) {
-              this.usersService.addUser({ uid, email, username })
+              this.usersService.addUser({ uid, email, username, role: 'user' })
               .subscribe({
                 next: () => {
                   this.router.navigateByUrl(this.returnUrl);

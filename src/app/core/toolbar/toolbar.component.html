@@ -13,7 +13,7 @@
             <img width="40" height="40" 
                 [src]="user.photoURL ?? '../../assets/images/user-placeholder.jpg'" routerLink="/account/profile">
             <button mat-button routerLink="/account/profile" class="profile-button" color="accent">
-                {{user.username}}
+                <span style="font-weight: 600;">{{user.username}}</span>
             </button>
         </div>
     </ng-container>

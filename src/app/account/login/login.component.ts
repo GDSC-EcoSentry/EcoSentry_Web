@@ -50,7 +50,7 @@ export class LoginComponent{
         this.usersService.getExistedUser(uid).subscribe({
           next: (userExisted) => {
             if(!userExisted && uid && email && username) {
-              this.usersService.addUser({ uid, email, username })
+              this.usersService.addUser({ uid, email, username, role: 'user' })
               .subscribe({
                 next: () => {
                   this.router.navigateByUrl(this.returnUrl);
