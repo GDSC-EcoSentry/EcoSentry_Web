@@ -13,7 +13,6 @@ import { NodeParams } from '../shared/models/nodeParams';
 export class DashboardComponent{
   searchStationsControl = new FormControl('');
   sortControl = new FormControl('');
-  sortOrderControl = new FormControl('');
   totalCount = 0;
 
   sorts = [
@@ -23,11 +22,6 @@ export class DashboardComponent{
     {name: 'Smoke', value: 'smoke'},
   ];
 
-  sortOrders = [
-    {name: 'Ascending', value: 'asc'},
-    {name: 'Descending', value: 'desc'},
-  ];
-
   nodeParams = new NodeParams;
 
   private selectedStationId = new BehaviorSubject<string>('');
@@ -35,6 +29,9 @@ export class DashboardComponent{
 
   private pageChanged = new BehaviorSubject<number>(1);
   pageChanged$ = this.pageChanged.asObservable();
+
+  private orderChanged = new BehaviorSubject<string>('asc');
+  orderChanged$ = this.orderChanged.asObservable();
 
   stations$ = combineLatest([
     this.dashboardService.allStations$, 
@@ -71,13 +68,13 @@ export class DashboardComponent{
       //All of the value changes that will trigger this observable
       this.selectedStation$,
       this.pageChanged$.pipe(startWith(1)),
-      this.sortControl.valueChanges.pipe(startWith('name')).pipe(
+      this.sortControl.valueChanges.pipe(
         tap(() => this.onPageChanged(1)),
-        startWith('')
+        startWith('name')
       ),
-      this.sortOrderControl.valueChanges.pipe(startWith('asc')).pipe(
+      this.orderChanged$.pipe(
         tap(() => this.onPageChanged(1)),
-        startWith('')
+        startWith('asc')
       )
     ]).pipe(
       switchMap(([station, page, sort, sortOrder]) => {
@@ -112,5 +109,12 @@ export class DashboardComponent{
       this.nodeParams.pageNumber = event;
       this.pageChanged.next(event);
     }
+  }
+
+  onOrderChanged() {
+    if(this.orderChanged.getValue() === 'asc') {
+      this.orderChanged.next('desc');
+    }
+    else this.orderChanged.next('asc');
   }
 }

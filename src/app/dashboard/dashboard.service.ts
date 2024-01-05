@@ -55,46 +55,11 @@ export class DashboardService {
         if(querySnapshot.size > 0) {
           const dataDoc = querySnapshot.docs[0];
           const latestData = {...dataDoc.data() } as Data;
-          
           return latestData;
         }
         else {
           return null;
         }
-      }),
-      switchMap(latestData => {
-        if (!latestData) {
-          // No latest data available, do nothing
-          return of(null);
-        }
-        
-        // Compare latestData with the current data in the document
-        return from(getDoc(nodeRef)).pipe(
-          switchMap(nodeDoc => {
-            const currentNodeData = nodeDoc.data() as Node;
-            
-            if (
-              currentNodeData.temperature !== latestData.temperature ||
-              currentNodeData.humidity !== latestData.humidity ||
-              currentNodeData.smoke !== latestData.smoke ||
-              currentNodeData.date !== latestData.date
-            ) {
-              // Properties are not equal, perform necessary actions
-              const newData = {
-                temperature: latestData.temperature,
-                humidity: latestData.humidity,
-                smoke: latestData.smoke,
-                date: latestData.date
-              };
-  
-              // Update the document with the latest data
-              return from(updateDoc( nodeRef, { ...newData })).pipe(map(() => latestData));
-            } else {
-              // Properties are equal, no need to update the document
-              return of(null);
-            }
-          })
-        );
       })
     )
   }
