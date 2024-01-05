@@ -16,13 +16,19 @@ export interface Node {
     chance: string;
     temperature: number;
     humidity: number;
-    smoke: number;
+    co: number;
     date: Date | Timestamp;
+    soil_moisture: number;
+    rain: number;   
+    dust: number;
 }
 
 export interface Data {
     temperature: number;
     humidity: number;
-    smoke: number;
+    co: number;
     date: Date | Timestamp;
+    soil_moisture: number;
+    rain: number;   
+    dust: number;
 }

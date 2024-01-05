@@ -1,20 +1,18 @@
 <div class="d-flex justify-content-center mt-5">
     <div class="col-10">
-        <h2 class="title">Dashboard</h2>
-        <div class="mb-3 mt-5">
-            <div class="search-node me-3">
-                <app-text-autocomplete
-                    [type]="'text'"
-                    [label]="'Select a station...'"
-                    [formControl]="searchStationsControl"
-                    [autocomplete]="stations"
-                ></app-text-autocomplete>
-                <mat-autocomplete #stations="matAutocomplete">
-                    <mat-option *ngFor="let station of stations$ | async" [value]="station.name" (click)="getSelectedStationId(station.id)">
-                        {{station.name}}
-                    </mat-option>
-                </mat-autocomplete>
-            </div>
+        <h2 class="title mat-elevation-z5 mb-5">Dashboard</h2>
+        <div class="search-node me-3">
+            <app-text-autocomplete
+                [type]="'text'"
+                [label]="'Select a station...'"
+                [formControl]="searchStationsControl"
+                [autocomplete]="stations"
+            ></app-text-autocomplete>
+            <mat-autocomplete #stations="matAutocomplete">
+                <mat-option *ngFor="let station of stations$ | async" [value]="station.name" (click)="getSelectedStationId(station.id)">
+                    {{station.name}}
+                </mat-option>
+            </mat-autocomplete>
         </div>
         <ng-container *ngIf="filteredNodes$ | async as nodes">
             <div class="d-flex align-items-center sorting">
@@ -43,8 +41,11 @@
                             <th><div class="py-2">Name</div></th>
                             <th><div class="py-2">Temperature</div></th>
                             <th><div class="py-2">Humidity</div></th>
-                            <th><div class="py-2">Smoke(CO)</div></th>
-                            <th><div class="py-2">Flammability</div></th>
+                            <th><div class="py-2">Soil Moisture</div></th>
+                            <th><div class="py-2">CO</div></th>
+                            <th><div class="py-2">Rain fall</div></th>
+                            <th><div class="py-2">Dust particle</div></th>
+                            <th><div class="py-2">Danger</div></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,7 +61,10 @@
                             </td>
                             <td>{{node.temperature}}C</td>
                             <td>{{node.humidity}}%</td>
-                            <td>{{node.smoke}}PPM</td>
+                            <td>{{node.soil_moisture}}%</td>
+                            <td>{{node.co}}PPM</td>
+                            <td>{{node.rain}}</td>
+                            <td>{{node.dust}}</td>
                             <td>{{node.chance}}</td>
                         </tr>
                     </tbody>

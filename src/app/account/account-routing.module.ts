@@ -27,10 +27,11 @@ const routes: Routes = [
     resolve: { loading: loadingResolver }, 
     canActivate: [homeGuard]
   },
-  {path: 'register', 
-  component: RegisterComponent, 
-  resolve: { loading: loadingResolver }, 
-  canActivate: [homeGuard]
+  {
+    path: 'register', 
+    component: RegisterComponent, 
+    resolve: { loading: loadingResolver }, 
+    canActivate: [homeGuard]
   },
   {
     path: 'verify', 
