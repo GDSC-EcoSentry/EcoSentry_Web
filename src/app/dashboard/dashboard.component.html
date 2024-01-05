@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center mt-5">
-    <div class="col-10">
+    <div class="col-11">
         <h2 class="title mat-elevation-z5 mb-5">Dashboard</h2>
-        <div class="search-node me-3">
+        <div class="search-station me-3">
             <app-text-autocomplete
                 [type]="'text'"
                 [label]="'Select a station...'"
@@ -16,8 +16,14 @@
         </div>
         <ng-container *ngIf="filteredNodes$ | async as nodes">
             <div class="d-flex align-items-center sorting">
-                <div *ngIf="selectedStation$ | async as selectedStation" class="station-name justify-content-start">
-                    <h3>{{selectedStation.name}}: {{selectedStation.location}}</h3>
+                <div *ngIf="selectedStation$ | async as selectedStation" class="station-name d-flex">
+                    <h3 class="d-flex justify-content-center align-items-center">
+                        {{selectedStation.name}}: {{selectedStation.location}}
+                    </h3>
+                    <button mat-icon-button class="d-flex justify-content-center align-items-center ms-2" routerLink="/dashboard/stations/{{(selectedStation$ | async)?.id}}">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    
                 </div>
                 <div class="flex-grow-1"></div>
                 <div class="select me-3 mt-3">

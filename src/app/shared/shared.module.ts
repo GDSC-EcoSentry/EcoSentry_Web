@@ -16,13 +16,16 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { TextAutocompleteComponent } from './components/text-autocomplete/text-autocomplete.component';
 import {MatListModule} from '@angular/material/list';
+import { MapComponent } from './components/map/map.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 @NgModule({
   declarations: [
     TextInputComponent,
     PagerComponent,
-    TextAutocompleteComponent
+    TextAutocompleteComponent,
+    MapComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +36,8 @@ import {MatListModule} from '@angular/material/list';
     FormsModule,
     PaginationModule.forRoot(),
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    GoogleMapsModule
   ],
   exports: [
     MatIconModule,
@@ -52,7 +56,9 @@ import {MatListModule} from '@angular/material/list';
     MatAutocompleteModule,
     TextAutocompleteComponent,
     MatListModule,
-    PagerComponent
+    PagerComponent,
+    GoogleMapsModule,
+    MapComponent
   ]
 })
 export class SharedModule { }
