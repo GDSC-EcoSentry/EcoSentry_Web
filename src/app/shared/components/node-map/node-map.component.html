@@ -1,0 +1,23 @@
+<google-map *ngIf="node && station" width="100%" height="70vh"
+[center]="nodePosition"
+[zoom]="zoom"
+[options]="mapOptions">
+    <ng-container *ngIf="station">
+        <map-marker 
+            #marker="mapMarker"
+            [position]="stationPosition" 
+            [options]="stationMarkerOptions"
+            (mapClick)="openInfoWindow(marker, infoWindow)">
+        </map-marker>
+        <map-info-window #infoWindow="mapInfoWindow">{{station.name}}: {{station.location}}</map-info-window>
+    </ng-container>
+    <ng-container *ngIf="node">
+        <map-marker 
+            #marker="mapMarker"
+            [position]="nodePosition" 
+            [options]="nodeMarkerOptions"
+            (mapClick)="openInfoWindow(marker, infoWindow)">
+        </map-marker>
+        <map-info-window #infoWindow="mapInfoWindow">{{node.name}}</map-info-window>
+    </ng-container>
+</google-map>

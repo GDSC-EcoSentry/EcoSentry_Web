@@ -18,11 +18,13 @@ import { provideHotToastConfig } from '@ngneat/hot-toast';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,

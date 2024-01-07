@@ -1,21 +1,22 @@
 <div class="d-flex justify-content-center mt-5" *ngIf="(user$ | async)?.role === 'admin' else notAuthorized">
     <div class="col-lg-4 col-md-5 col-sm-10 col-11 form-container mat-elevation-z5">
         <div class="text-center mt-2">
-            <h1 style="color: #1b5e20;">Edit Station</h1>
+            <h1 style="color: #1b5e20;">Add Station</h1>
         </div>
-        <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="mt-5">
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="mt-5">
             <div class="mb-4">
-                <app-text-input [formControl]="editForm.controls['id']" [label]="'Station\'s ID'"></app-text-input>
+                <app-text-input [formControl]="createForm.controls['id']" [label]="'Station\'s ID'"></app-text-input>
             </div>
             <div class="mb-4">
-                <app-text-input [formControl]="editForm.controls['name']" [label]="'Station\'s name'"></app-text-input>
+                <app-text-input [formControl]="createForm.controls['name']" [label]="'Station\'s name'"></app-text-input>
             </div>
             <div class="mb-4">
-                <app-text-input [formControl]="editForm.controls['location']" [label]="'Location'"></app-text-input>
+                <app-text-input [formControl]="createForm.controls['location']" [label]="'Location'"></app-text-input>
             </div>
             <div class="d-grid mb-3">
-              <button mat-raised-button color="primary" [disabled]="editForm.invalid" type="submit" style="height: 50px;">Update Station</button>
+              <button mat-raised-button color="primary" [disabled]="createForm.invalid" type="submit" style="height: 50px;">Create Station</button>
             </div>
+            
         </form>
     </div>
 </div>

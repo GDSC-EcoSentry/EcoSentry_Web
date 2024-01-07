@@ -5,12 +5,14 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { StationComponent } from './station/station.component';
 import { NodeComponent } from './node/node.component';
+import { NodeEditComponent } from './node-edit/node-edit.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     StationComponent,
-    NodeComponent
+    NodeComponent,
+    NodeEditComponent
   ],
   imports: [
     CommonModule,

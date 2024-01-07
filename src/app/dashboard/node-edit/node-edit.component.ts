@@ -7,16 +7,19 @@ import { FirestoreService } from 'src/app/shared/services/firestore.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-station',
-  templateUrl: './station.component.html',
-  styleUrls: ['./station.component.scss']
+  selector: 'app-node-edit',
+  templateUrl: './node-edit.component.html',
+  styleUrls: ['./node-edit.component.scss']
 })
-export class StationComponent implements OnInit{
+export class NodeEditComponent implements OnInit{
 
   stationid: string = this.activatedRoute.snapshot.paramMap.get('stationid') ?? '';
+  nodeid: string = this.activatedRoute.snapshot.paramMap.get('nodeid') ?? '';
+
 
   user$ = this.usersService.currentUserProfile$;
   station$ = this.firestoreService.getStation$(this.stationid);
+  node$ = this.firestoreService.getNode$(this.stationid, this.nodeid);
 
   editForm = this.fb.group({
     id: [''],
@@ -32,18 +35,30 @@ export class StationComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.node$.pipe(
+      untilDestroyed(this)
+    ).subscribe(node => {
+      if (node) {
+        this.editForm.patchValue({
+          id: node.id,
+          name: node.name,
+        });
+      }
+    });
+  
     this.station$.pipe(
       untilDestroyed(this)
     ).subscribe(station => {
       if (station) {
         this.editForm.patchValue({
-          ...station
+          location: station.location
         });
       }
     });
   }
 
   onSubmit() {
-    
+
   }
+
 }

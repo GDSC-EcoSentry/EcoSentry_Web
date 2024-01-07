@@ -18,6 +18,9 @@ import { TextAutocompleteComponent } from './components/text-autocomplete/text-a
 import {MatListModule} from '@angular/material/list';
 import { MapComponent } from './components/map/map.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { NodeMapComponent } from './components/node-map/node-map.component';
+import { NgxGaugeModule } from 'ngx-gauge';
+import { GaugeComponent } from './components/gauge/gauge.component';
 
 
 @NgModule({
@@ -25,7 +28,9 @@ import { GoogleMapsModule } from '@angular/google-maps';
     TextInputComponent,
     PagerComponent,
     TextAutocompleteComponent,
-    MapComponent
+    MapComponent,
+    NodeMapComponent,
+    GaugeComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +42,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     PaginationModule.forRoot(),
     MatSelectModule,
     MatAutocompleteModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    NgxGaugeModule
   ],
   exports: [
     MatIconModule,
@@ -58,7 +64,10 @@ import { GoogleMapsModule } from '@angular/google-maps';
     MatListModule,
     PagerComponent,
     GoogleMapsModule,
-    MapComponent
+    MapComponent,
+    NodeMapComponent,
+    NgxGaugeModule,
+    GaugeComponent
   ]
 })
 export class SharedModule { }

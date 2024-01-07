@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject, combineLatest, map, startWith, switchMap } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { DashboardService } from '../dashboard/dashboard.service';
 import { Node } from '../shared/models/station';
+import { FirestoreService } from '../shared/services/firestore.service';
 
 @Component({
   selector: 'app-home',
@@ -12,13 +12,13 @@ import { Node } from '../shared/models/station';
 export class HomeComponent{
   searchStationsControl = new FormControl('');
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(private firestoreService: FirestoreService) {}
 
-  allStations$ = this.dashboardService.allStations$;
-  allNodes$ = this.dashboardService.allStations$.pipe(
+  allStations$ = this.firestoreService.allStations$;
+  allNodes$ = this.firestoreService.allStations$.pipe(
     switchMap(stations => {
       const nodeObservables = stations.map(station =>
-        this.dashboardService.getAllNodes$(station.id)
+        this.firestoreService.getAllNodes$(station.id)
       );
       return combineLatest(nodeObservables).pipe(
         map(nodesArray => {
@@ -38,13 +38,13 @@ export class HomeComponent{
   selectedStationId$ = this.selectedStationId.asObservable();
 
   stations$ = combineLatest([
-    this.dashboardService.allStations$, 
+    this.firestoreService.allStations$, 
     this.searchStationsControl.valueChanges.pipe(startWith(''))
   ]).pipe(
     map(([stations, searchString]) => stations.filter(s => s.name?.toLowerCase().includes((searchString ?? '').toLowerCase())))
   )
 
-  selectedStation$ = combineLatest([this.dashboardService.allStations$, this.selectedStationId$]).pipe(
+  selectedStation$ = combineLatest([this.firestoreService.allStations$, this.selectedStationId$]).pipe(
     map(([stations, stationId]) => {
       if (stationId) {
         return stations.find((s) => s.id === stationId) || undefined;
@@ -57,4 +57,5 @@ export class HomeComponent{
   getSelectedStationId(stationId: string) {
     this.selectedStationId.next(stationId);
   }
+  
 }

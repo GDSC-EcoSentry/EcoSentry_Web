@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, SimpleChanges} from '@angular/core';
 import { Node, Station } from '../../models/station';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
@@ -16,7 +16,7 @@ export class MapComponent{
     lat: 0,
     lng: 0
   };
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedStation'] && this.selectedStation) {
       this.centerPosition = {
@@ -38,7 +38,7 @@ export class MapComponent{
     draggable: false,
   };
 
-  markerOptions: google.maps.MarkerOptions = {
+  stationMarkerOptions: google.maps.MarkerOptions = {
     draggable: false,
     icon: 'assets/images/gateway.svg'
   };

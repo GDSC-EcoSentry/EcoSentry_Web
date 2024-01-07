@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, getDocs, limit, orderBy, query, startAt } from '@angular/fire/firestore';
-import { Data, Node, Station } from '../shared/models/station';
+import { Firestore, collection, collectionData, doc, fromRef, getDocs, limit, orderBy, query, startAt } from '@angular/fire/firestore';
 import { Observable, from, map, switchMap } from 'rxjs';
-import { NodeParams } from '../shared/models/nodeParams';
+import { Station, Node, Data } from '../models/station';
+import { NodeParams } from '../models/nodeParams';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService {
+export class FirestoreService {
 
   constructor(private firestore: Firestore) { }
 
@@ -22,6 +22,32 @@ export class DashboardService {
     const ref = collection(this.firestore, 'stations', stationId, 'nodes');
     const queryAll = query(ref, orderBy('name', 'asc'));
     return collectionData(queryAll, {idField: 'id'}) as Observable<Node[]>
+  }
+
+  getNode$(stationId: string, nodeId: string): Observable<Node | null> {
+    const nodeRef = doc(this.firestore, 'stations', stationId, 'nodes', nodeId);
+    return fromRef(nodeRef).pipe(
+      map((snapshot) => {
+        if (snapshot.exists()) {
+          return { id: snapshot.id, ...snapshot.data() } as Node;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+
+  getStation$(stationId: string): Observable<Station | null> {
+    const stationRef = doc(this.firestore, 'stations', stationId);
+    return fromRef(stationRef).pipe(
+      map((snapshot) => {
+        if (snapshot.exists()) {
+          return { id: snapshot.id, ...snapshot.data() } as Station;
+        } else {
+          return null;
+        }
+      })
+    );
   }
 
   getFilteredNodes$(nodeParams: NodeParams): Observable<Node[] | null> {
@@ -65,5 +91,3 @@ export class DashboardService {
     )
   }
 }
-
-

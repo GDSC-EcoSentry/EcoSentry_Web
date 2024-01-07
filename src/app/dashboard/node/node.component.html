@@ -1,4 +1,88 @@
-<div class="mt-5 ms-5">
-    <h2 class="title">Edit Node</h2>
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-11" *ngIf="(station$ | async) as station">
+        <ng-container *ngIf="(node$ | async) as node">
+            <div class="d-flex">
+                <div class="d-flex justify-content-center align-items-center">
+                    <h2 class="title mb-4">{{station.name}}: {{station.location}} - {{node.name}}</h2>
+                </div>
+                <div style="padding-bottom: 30px">
+                    <button mat-icon-button class="d-flex justify-content-center align-items-center ms-2" routerLink="/dashboard/stations/{{station.id}}/node-edit/{{node.id}}">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="col-5">
+                    <app-node-map [node]="node" [station]="station"></app-node-map>
+                </div>
+                <div class="col-7">
+                    <div class="d-flex">
+                        <div class="col-4 mat-elevation-z3 d-flex justify-content-center align-items-center gauge">
+                            <app-gauge
+                                [label] = "'Temperature'"
+                                [append] ="'C'"
+                                [max] = "60"
+                                [value]="node.temperature"
+                                [thresholdConfig]="tempThreshold"
+                            >
+                            </app-gauge>
+                        </div>
+                        <div class="col-4 mat-elevation-z5 d-flex justify-content-center align-items-center gauge">
+                            <app-gauge
+                                [label] = "'Humidity'"
+                                [append] ="'%'"
+                                [max] = "100"
+                                [value]="node.humidity"
+                                [thresholdConfig]="humidityThreshold"
+                            >
+                            </app-gauge>
+                        </div>
+                        <div class="col-4 mat-elevation-z5 d-flex justify-content-center align-items-center gauge">
+                            <app-gauge
+                                [label] = "'Soil Moisture'"
+                                [append] ="'%'"
+                                [max] = "100"
+                                [value]="node.soil_moisture"
+                                [thresholdConfig]="soilMoistThreshold"
+                            >
+                            </app-gauge>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col-4 mat-elevation-z5 d-flex justify-content-center align-items-center gauge">
+                            <app-gauge
+                                [label] = "'CO'"
+                                [append] ="'PPM'"
+                                [max] = "300"
+                                [value]="node.co"
+                                [thresholdConfig]="coThreshold"
+                            >
+                            </app-gauge>
+                        </div>
+                        <div class="col-4 mat-elevation-z5 d-flex justify-content-center align-items-center gauge">
+                            <app-gauge
+                                [label] = "'Rain Fall'"
+                                [append] ="'mm'"
+                                [max] = "2000"
+                                [value]="node.rain"
+                                [thresholdConfig]="rainThreshold"
+                            >
+                            </app-gauge>
+                        </div>
+                        <div class="col-4 mat-elevation-z5 d-flex justify-content-center align-items-center gauge">
+                            <app-gauge
+                                [label] = "'Dust Particle'"
+                                [append] ="'ug/m3'"
+                                [max] = "30"
+                                [value]="node.dust"
+                                [thresholdConfig]="dustThreshold"
+                            >
+                            </app-gauge>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
 </div>
 

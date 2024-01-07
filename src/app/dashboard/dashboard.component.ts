@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, combineLatest, map, of, startWith, switchMap, tap } from 'rxjs';
-import { DashboardService } from './dashboard.service';
+
 import { Node } from '../shared/models/station';
 import { NodeParams } from '../shared/models/nodeParams';
+import { FirestoreService } from '../shared/services/firestore.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,13 +35,13 @@ export class DashboardComponent{
   orderChanged$ = this.orderChanged.asObservable();
 
   stations$ = combineLatest([
-    this.dashboardService.allStations$, 
+    this.firestoreService.allStations$, 
     this.searchStationsControl.valueChanges.pipe(startWith(''))
   ]).pipe(
     map(([stations, searchString]) => stations.filter(s => s.name?.toLowerCase().includes((searchString ?? '').toLowerCase())))
   )
 
-  selectedStation$ = combineLatest([this.dashboardService.allStations$, this.selectedStationId$]).pipe(
+  selectedStation$ = combineLatest([this.firestoreService.allStations$, this.selectedStationId$]).pipe(
     map(([stations, stationId]) => {
       if (stationId) {
         return stations.find((s) => s.id === stationId) || null;
@@ -53,7 +54,7 @@ export class DashboardComponent{
   allNodes$ = this.selectedStation$.pipe(
     switchMap((station) => {
       if(station) {
-        return this.dashboardService.getAllNodes$(station.id).pipe(
+        return this.firestoreService.getAllNodes$(station.id).pipe(
           map((nodes) => {
             this.totalCount = nodes?.length ?? 0;
             return nodes;
@@ -84,10 +85,10 @@ export class DashboardComponent{
         this.nodeParams.pageNumber = page;
         
         //Get the filtered nodes and update the latest data to it.
-        return this.dashboardService.getFilteredNodes$(this.nodeParams).pipe(
+        return this.firestoreService.getFilteredNodes$(this.nodeParams).pipe(
           switchMap((nodes) => {
             const latestDataObservables = (nodes || []).map((node) => {
-              return this.dashboardService.getLatestData$(this.nodeParams.stationId, node.id).pipe(
+              return this.firestoreService.getLatestData$(this.nodeParams.stationId, node.id).pipe(
                 map((latestData) => ({ ...node, ...latestData }))
               );
             });
@@ -98,7 +99,7 @@ export class DashboardComponent{
       })
     );
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(private firestoreService: FirestoreService) {}
 
   getSelectedStationId(stationId: string) {
     this.selectedStationId.next(stationId);
