@@ -1,6 +1,9 @@
 mat-sidenav {
     width: 300px;
     background-color: #1b5e20;
+  box-shadow: 0 0 5px rgba(0,0,0,0.8);
+
+
 }
 
 mat-nav-list span{
@@ -21,4 +24,12 @@ mat-nav-list span{
     position: fixed;
     width: 100%;
     z-index: 99;
+}
+
+.active-list-item {
+    background-color: #123F15;
+    & span {
+        font-weight: bold;
+        color: #a7ffeb;
+    }
 }

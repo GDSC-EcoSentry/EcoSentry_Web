@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from './account/services/account.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoaderService } from './core/services/loader.service';
 import { UsersService } from './account/services/users.service';
 
@@ -16,10 +16,11 @@ export class AppComponent implements OnInit{
     private accountService: AccountService, 
     private router: Router,
     public loaderService: LoaderService,
-    private usersService: UsersService
+    private usersService: UsersService,
   ) {}
 
   ngOnInit() {
+    
   }
 
   logout(){

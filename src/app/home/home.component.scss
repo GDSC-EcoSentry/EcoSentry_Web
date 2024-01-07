@@ -6,7 +6,12 @@
     padding-top: 20px;
     padding-left: 50px;
     width: 100%;
-    background-image: url("../../assets/images/title-background.png");
+    background-image: url("../../assets/images/title-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    opacity: 0.9;
+}
+
+.search-station {
+    margin-right: 0px !important;
 }

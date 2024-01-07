@@ -6,7 +6,7 @@
     padding-top: 20px;
     padding-left: 50px;
     width: 100%;
-    background-image: url("../../assets/images/title-background.png");
+    background-image: url("../../assets/images/title-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -18,7 +18,7 @@
 }
 
 thead th {
-    color: #a7ffeb;
+    color: white;
     background-color: #123F15;
     font-size: 14pt;
     padding-left: 2%;
@@ -73,4 +73,8 @@ td {
 
 .my-table tr:first-child th:last-child {
     border-top-right-radius: 10px;
+}
+
+.search-station {
+    margin-right: 0px !important;
 }

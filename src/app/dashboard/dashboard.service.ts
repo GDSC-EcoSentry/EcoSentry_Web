@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData,  doc,  getDoc,  getDocs, limit, orderBy, query, startAfter, startAt,  updateDoc,  where } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, getDocs, limit, orderBy, query, startAt } from '@angular/fire/firestore';
 import { Data, Node, Station } from '../shared/models/station';
-import { Observable, concatMap, from, map, of, switchMap } from 'rxjs';
+import { Observable, from, map, switchMap } from 'rxjs';
 import { NodeParams } from '../shared/models/nodeParams';
 
 
@@ -55,6 +55,7 @@ export class DashboardService {
         if(querySnapshot.size > 0) {
           const dataDoc = querySnapshot.docs[0];
           const latestData = {...dataDoc.data() } as Data;
+          
           return latestData;
         }
         else {

@@ -1,6 +1,24 @@
 <div class="d-flex justify-content-center mt-5">
     <div class="col-11">
-        <h2 class="title mat-elevation-z5 mb-5">Home</h2>
-        <app-map></app-map>
+        <h2 class="title mat-elevation-z5 mb-4">Home</h2>
+        <div class="search-station me-3">
+            <app-text-autocomplete
+                [type]="'text'"
+                [label]="'Select a station...'"
+                [formControl]="searchStationsControl"
+                [autocomplete]="stations"
+            ></app-text-autocomplete>
+            <mat-autocomplete #stations="matAutocomplete">
+                <mat-option *ngFor="let station of stations$ | async" [value]="station.name" (click)="getSelectedStationId(station.id)">
+                    {{station.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <app-map
+            [stations]="allStations$ | async"
+            [selectedStation]="selectedStation$ | async"
+        ></app-map>
     </div>
 </div>
+
+
