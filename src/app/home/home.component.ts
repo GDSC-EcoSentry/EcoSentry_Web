@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, map, startWith } from 'rxjs';
-import { Station } from '../shared/models/station';
+import { BehaviorSubject, combineLatest, map, startWith, switchMap } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { DashboardService } from '../dashboard/dashboard.service';
+import { Node } from '../shared/models/station';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +15,24 @@ export class HomeComponent{
   constructor(private dashboardService: DashboardService) {}
 
   allStations$ = this.dashboardService.allStations$;
+  allNodes$ = this.dashboardService.allStations$.pipe(
+    switchMap(stations => {
+      const nodeObservables = stations.map(station =>
+        this.dashboardService.getAllNodes$(station.id)
+      );
+      return combineLatest(nodeObservables).pipe(
+        map(nodesArray => {
+          const flattenedNodes = nodesArray.reduce((acc, nodes) => {
+            if (nodes && acc) {
+              acc.push(...nodes);
+            }
+            return acc;
+          }, [] as Node[]);
+          return flattenedNodes;
+        })
+      );
+    })
+  );
 
   private selectedStationId = new BehaviorSubject<string>('');
   selectedStationId$ = this.selectedStationId.asObservable();

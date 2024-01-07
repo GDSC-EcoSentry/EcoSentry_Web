@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Station } from '../../models/station';
+import { Node, Station } from '../../models/station';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
 @Component({
@@ -10,7 +10,7 @@ import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 export class MapComponent{
   @Input() stations: Station[] | null = [];
   @Input() selectedStation: Station | null | undefined;
-  
+  @Input() nodes: Node[] | null = [];
 
   centerPosition: google.maps.LatLngLiteral = {
     lat: 0,
@@ -33,6 +33,10 @@ export class MapComponent{
     zoomControl: false,
     minZoom: 4,
   }
+
+  nodeMarkerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+  };
 
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,

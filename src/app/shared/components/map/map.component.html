@@ -12,4 +12,13 @@
             <map-info-window #infoWindow="mapInfoWindow"> {{station.name}}: {{station.location}}</map-info-window>
         </map-marker>
     </ng-container>
+    <ng-container *ngFor="let node of nodes">
+        <map-marker
+            #marker="mapMarker"
+            [position]="{ lat: node.geopoint.latitude, lng: node.geopoint.longitude }"
+            [options]="nodeMarkerOptions"
+            (mapClick)="openInfoWindow(marker, infoWindow)">
+        </map-marker>
+        <map-info-window #infoWindow="mapInfoWindow">{{node.name}}</map-info-window>
+    </ng-container>
 </google-map>
