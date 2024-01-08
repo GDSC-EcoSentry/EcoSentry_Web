@@ -10,6 +10,7 @@ mat-nav-list span{
     color: white;
     font-size: large;
     font-weight: 600;
+    position: relative;
 }
 
 .mat-mdc-list-base {
@@ -17,7 +18,9 @@ mat-nav-list span{
 }
 
 .sidenav-footer{
-    margin-top: 54vh;
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
 }
 
 .loader-container{
