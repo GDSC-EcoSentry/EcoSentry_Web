@@ -23,7 +23,7 @@ export class NodeMapComponent implements OnInit{
   mapOptions: google.maps.MapOptions = {
     streetViewControl: false,
     zoomControl: false,
-    minZoom: 4,
+    minZoom: 12,
   }
 
   nodeMarkerOptions: google.maps.MarkerOptions = {

@@ -3,7 +3,7 @@
         <ng-container *ngIf="(node$ | async) as node">
             <div class="d-flex">
                 <div class="d-flex justify-content-center align-items-center">
-                    <h2 class="title mb-4">{{station.name}}: {{station.location}} - {{node.name}}</h2>
+                    <h2 class="title mb-4">{{station.location}}: {{station.name}} - {{node.name}}</h2>
                 </div>
                 <div style="padding-bottom: 30px">
                     <button mat-icon-button class="d-flex justify-content-center align-items-center ms-2" routerLink="/dashboard/stations/{{station.id}}/node-edit/{{node.id}}">

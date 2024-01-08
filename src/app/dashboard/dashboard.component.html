@@ -9,8 +9,8 @@
                 [autocomplete]="stations"
             ></app-text-autocomplete>
             <mat-autocomplete #stations="matAutocomplete">
-                <mat-option *ngFor="let station of stations$ | async" [value]="station.name" (click)="getSelectedStationId(station.id)">
-                    {{station.name}}
+                <mat-option *ngFor="let station of stations$ | async" [value]="station.location + ': ' + station.name" (click)="getSelectedStationId(station.id)">
+                    {{station.location}}: {{station.name}}
                 </mat-option>
             </mat-autocomplete>
         </div>
@@ -18,7 +18,7 @@
             <div class="d-flex align-items-center sorting mb-3">
                 <div *ngIf="selectedStation$ | async as selectedStation" class="station-name d-flex">
                     <h3 class="d-flex justify-content-center align-items-center">
-                        {{selectedStation.name}}: {{selectedStation.location}}
+                        {{selectedStation.location}}: {{selectedStation.name}}
                     </h3>
                     <button mat-icon-button class="d-flex justify-content-center align-items-center ms-2" routerLink="/dashboard/stations/{{(selectedStation$ | async)?.id}}">
                         <mat-icon>edit</mat-icon>

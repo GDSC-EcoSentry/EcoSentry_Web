@@ -9,8 +9,8 @@
                 [autocomplete]="stations"
             ></app-text-autocomplete>
             <mat-autocomplete #stations="matAutocomplete">
-                <mat-option *ngFor="let station of stations$ | async" [value]="station.name" (click)="getSelectedStationId(station.id)">
-                    {{station.name}}
+                <mat-option *ngFor="let station of stations$ | async" [value]="station.location + ': ' + station.name" (click)="getSelectedStationId(station.id)">
+                    {{station.location}}: {{station.name}}
                 </mat-option>
             </mat-autocomplete>
         </div>

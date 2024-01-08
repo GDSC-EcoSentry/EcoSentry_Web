@@ -41,7 +41,10 @@ export class HomeComponent{
     this.firestoreService.allStations$, 
     this.searchStationsControl.valueChanges.pipe(startWith(''))
   ]).pipe(
-    map(([stations, searchString]) => stations.filter(s => s.name?.toLowerCase().includes((searchString ?? '').toLowerCase())))
+    map(([stations, searchString]) => stations.filter(s => {
+      const station = (s.location + ": " + s.name).toLowerCase();
+      return station.includes((searchString ?? '').toLowerCase());
+    }))
   )
 
   selectedStation$ = combineLatest([this.firestoreService.allStations$, this.selectedStationId$]).pipe(

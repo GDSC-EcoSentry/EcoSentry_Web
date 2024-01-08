@@ -9,7 +9,7 @@
             [position]="{ lat: station.geopoint.latitude, lng: station.geopoint.longitude}" 
             [options]="stationMarkerOptions"
             (mapClick)="openInfoWindow(marker, infoWindow)">
-            <map-info-window #infoWindow="mapInfoWindow"> {{station.name}}: {{station.location}}</map-info-window>
+            <map-info-window #infoWindow="mapInfoWindow"> {{station.location}}: {{station.name}} </map-info-window>
         </map-marker>
     </ng-container>
     <ng-container *ngFor="let node of nodes">
