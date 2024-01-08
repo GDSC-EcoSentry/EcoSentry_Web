@@ -24,6 +24,12 @@ export class StationComponent implements OnInit{
     location: ['']
   })
 
+  addNodeForm = this.fb.group({
+    stationId: [''],
+    nodeId: [''],
+    name: ['']
+  })
+
   constructor(
     private fb: NonNullableFormBuilder,
     private usersService: UsersService,
@@ -39,6 +45,9 @@ export class StationComponent implements OnInit{
         this.editForm.patchValue({
           ...station
         });
+        this.addNodeForm.patchValue({
+          stationId: station.id
+        })
       }
     });
   }
