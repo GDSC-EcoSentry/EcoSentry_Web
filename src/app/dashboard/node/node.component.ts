@@ -19,37 +19,37 @@ export class NodeComponent {
 
   
   tempThreshold = {
-    '0': {color: 'green'},
-    '35': {color: 'orange'},
-    '50': {color: 'red'}
+    '0': {color: '#2d9399'},
+    '30': {color: 'orange'},
+    '40': {color: 'red'}
   };
 
   humidityThreshold = {
     '0': {color: 'red'},
-    '10': {color: 'orange'},
-    '20': {color: 'green'}
+    '30': {color: '#37ae83'},
+    '90': {color: 'orange'}
   };
 
   soilMoistThreshold = {
     '0': {color: 'red'},
-    '10': {color: 'orange'},
-    '20': {color: 'green'}
+    '20': {color: 'orange'},
+    '40': {color: '#9d4337'}
   };
 
   coThreshold = {
-    '0': {color: 'green'},
-    '100': {color: 'orange'},
-    '300': {color: 'red'}
+    '0': {color: '#a68b41'},
+    '5': {color: 'orange'},
+    '10': {color: 'red'}
   };
 
   rainThreshold = {
-    '0': {color: 'green'},
-    '600': {color: 'orange'},
-    '1800': {color: 'red'}
+    '0': {color: '#0d6cdd'},
+    '2': {color: 'orange'},
+    '5': {color: 'red'}
   };
 
   dustThreshold = {
-    '0': {color: 'green'},
+    '0': {color: '#574103'},
     '20': {color: 'orange'},
     '30': {color: 'red'}
   };
