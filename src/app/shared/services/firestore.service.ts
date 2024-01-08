@@ -71,23 +71,4 @@ export class FirestoreService {
       })
     )
   }
-
-  getLatestData$(stationId: string, nodeId: string): Observable<Data | null> {
-    const stationRef = doc(this.firestore, 'stations', stationId);
-    const nodeRef = doc(stationRef, 'nodes', nodeId);
-    const dataQuery = query(collection(nodeRef, 'data'), orderBy('date', 'desc'), limit(1));
-    return from(getDocs(dataQuery)).pipe(
-      map(querySnapshot => {
-        if(querySnapshot.size > 0) {
-          const dataDoc = querySnapshot.docs[0];
-          const latestData = {...dataDoc.data() } as Data;
-          
-          return latestData;
-        }
-        else {
-          return null;
-        }
-      })
-    )
-  }
 }

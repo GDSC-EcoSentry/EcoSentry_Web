@@ -85,17 +85,7 @@ export class DashboardComponent{
         this.nodeParams.pageNumber = page;
         
         //Get the filtered nodes and update the latest data to it.
-        return this.firestoreService.getFilteredNodes$(this.nodeParams).pipe(
-          switchMap((nodes) => {
-            const latestDataObservables = (nodes || []).map((node) => {
-              return this.firestoreService.getLatestData$(this.nodeParams.stationId, node.id).pipe(
-                map((latestData) => ({ ...node, ...latestData }))
-              );
-            });
-        
-            return combineLatest(latestDataObservables) as Observable<Node[]>;
-          })
-        );
+        return this.firestoreService.getFilteredNodes$(this.nodeParams);
       })
     );
 
