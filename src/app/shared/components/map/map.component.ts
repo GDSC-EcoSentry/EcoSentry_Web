@@ -26,7 +26,7 @@ export class MapComponent{
     }
   }
 
-  zoom = 15;
+  zoom = 16;
 
   mapOptions: google.maps.MapOptions = {
     streetViewControl: false,
