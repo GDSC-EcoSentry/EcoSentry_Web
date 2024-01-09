@@ -53,7 +53,7 @@
                             <app-gauge
                                 [label] = "'CO'"
                                 [append] ="'PPM'"
-                                [max] = "20"
+                                [max] = "15"
                                 [value]="node.co"
                                 [thresholdConfig]="coThreshold"
                             >
@@ -62,8 +62,8 @@
                         <div class="col-4 me-3 mat-elevation-z2 d-flex justify-content-center align-items-center gauge">
                             <app-gauge
                                 [label] = "'Rain Fall'"
-                                [append] ="'inch/h'"
-                                [max] = "10"
+                                [append] ="'in/h'"
+                                [max] = "7"
                                 [value]="node.rain"
                                 [thresholdConfig]="rainThreshold"
                             >
