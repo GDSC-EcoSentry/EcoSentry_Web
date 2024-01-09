@@ -39,4 +39,8 @@ export class NodeMapComponent implements OnInit{
     infoWindow.open(marker);
   }
 
+  closeInfoWindow(infoWindow: MapInfoWindow) {
+    infoWindow.close();
+  }
+
 }

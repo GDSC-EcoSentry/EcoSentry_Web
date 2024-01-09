@@ -54,3 +54,7 @@ mat-form-field{
 .mat-mdc-form-field-subscript-wrapper, .mat-mdc-form-field-bottom-align::before {
     display: none;
 }
+
+button.gm-ui-hover-effect {
+    visibility: hidden;
+}

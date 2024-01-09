@@ -7,7 +7,8 @@
             #marker="mapMarker"
             [position]="stationPosition" 
             [options]="stationMarkerOptions"
-            (mapClick)="openInfoWindow(marker, infoWindow)">
+            (mapMouseover)="openInfoWindow(marker, infoWindow)"
+            (mapMouseout)="closeInfoWindow(infoWindow)">
         </map-marker>
         <map-info-window #infoWindow="mapInfoWindow">{{station.name}}: {{station.location}}</map-info-window>
     </ng-container>
@@ -16,7 +17,8 @@
             #marker="mapMarker"
             [position]="nodePosition" 
             [options]="nodeMarkerOptions"
-            (mapClick)="openInfoWindow(marker, infoWindow)">
+            (mapMouseover)="openInfoWindow(marker, infoWindow)"
+            (mapMouseout)="closeInfoWindow(infoWindow)">
         </map-marker>
         <map-info-window #infoWindow="mapInfoWindow">{{node.name}}</map-info-window>
     </ng-container>

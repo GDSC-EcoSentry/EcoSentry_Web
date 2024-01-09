@@ -47,6 +47,8 @@ export class MapComponent{
     infoWindow.open(marker);
   }
   
-
+  closeInfoWindow(infoWindow: MapInfoWindow) {
+    infoWindow.close();
+  }
 
 }

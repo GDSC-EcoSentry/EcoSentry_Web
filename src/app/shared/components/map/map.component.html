@@ -8,8 +8,11 @@
             #marker="mapMarker"
             [position]="{ lat: station.geopoint.latitude, lng: station.geopoint.longitude}" 
             [options]="stationMarkerOptions"
-            (mapClick)="openInfoWindow(marker, infoWindow)">
-            <map-info-window #infoWindow="mapInfoWindow"> {{station.location}}: {{station.name}} </map-info-window>
+            (mapMouseover)="openInfoWindow(marker, infoWindow)"
+            (mapMouseout)="closeInfoWindow(infoWindow)">
+            <map-info-window #infoWindow="mapInfoWindow"> 
+                <div>{{station.location}}: {{station.name}}</div>
+             </map-info-window>
         </map-marker>
     </ng-container>
     <ng-container *ngFor="let node of nodes">
@@ -17,8 +20,38 @@
             #marker="mapMarker"
             [position]="{ lat: node.geopoint.latitude, lng: node.geopoint.longitude }"
             [options]="nodeMarkerOptions"
-            (mapClick)="openInfoWindow(marker, infoWindow)">
+            (mapMouseover)="openInfoWindow(marker, infoWindow)"
+            (mapMouseout)="closeInfoWindow(infoWindow)">
         </map-marker>
-        <map-info-window #infoWindow="mapInfoWindow">{{node.name}}</map-info-window>
+        <map-info-window #infoWindow="mapInfoWindow">
+            <div style="width: 160px">
+                <div class="mb-3">{{node.name}}</div>
+                <div class="d-flex mb-2 justify-content-center">
+                    <div class="data col-6">
+                        <img src="assets/images/thermometer-half-solid.svg" class="me-2"><span>{{node.temperature}}°C</span>
+                    </div>
+                    <div class="data col-6">
+                        <img src="assets/images/droplet-solid.svg" class="me-2"><span>{{node.humidity}}%</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <div class="data col-6">
+                        <img src="assets/images/water-solid.svg" class="me-2"><span>{{node.soil_moisture}}%</span>
+                    </div>
+                    <div class="data col-6">
+                        <span class="me-2" style="font-weight: 600;">CO</span><span>{{node.co}} PPM</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="data col-6">
+                        <img src="assets/images/cloud-rain-solid.svg" class="me-2"><span>{{node.rain}} in/h</span>
+                    </div>
+                    <div class="data col-6">
+                        <img src="assets/images/wind-solid.svg" class="me-2"><span>{{node.dust}} μg/m3</span>
+                    </div>
+                </div>
+            </div>
+            
+        </map-info-window>
     </ng-container>
 </google-map>
