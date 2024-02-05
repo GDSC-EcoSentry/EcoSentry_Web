@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "lodash"
+           ],
             "outputPath": "dist/eco-sentry",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -36,6 +39,7 @@
               "src/styles.scss"
             ],
             "scripts": [
+              "node_modules/apexcharts/dist/apexcharts.min.js"
             ]
           },
           "configurations": {

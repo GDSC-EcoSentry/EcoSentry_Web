@@ -3,6 +3,20 @@
 }
 
 .data-card {
-    height: 35vh;
+    padding-bottom: 35px;
     background-color: rgba(0,0,0,0.1);
+    width: 16%;
+}
+
+.symbols {
+    width: 30px;
+    height: 30px;
+}
+
+.map {
+    width: 40%;
+}
+
+.chart {
+    width: 60%;
 }
