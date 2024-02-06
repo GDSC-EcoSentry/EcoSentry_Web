@@ -16,6 +16,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),
     provideFirestore(() => getFirestore()),
+    NgbModule,
   ],
   providers: [
     provideHotToastConfig({

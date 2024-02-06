@@ -22,8 +22,7 @@ import { NodeMapComponent } from './components/node-map/node-map.component';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { GaugeComponent } from './components/gauge/gauge.component';
 import { ChartComponent } from './components/chart/chart.component';
-import { NgApexchartsModule, ApexXAxis} from 'ng-apexcharts';
-import * as ApexCharts from 'apexcharts';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,7 @@ import * as ApexCharts from 'apexcharts';
     ChartComponent
   ],
   imports: [
-  CommonModule,
+    CommonModule,
     ReactiveFormsModule,
     MatDividerModule,
     MatFormFieldModule,
@@ -47,7 +46,7 @@ import * as ApexCharts from 'apexcharts';
     MatAutocompleteModule,
     GoogleMapsModule,
     NgxGaugeModule,
-    NgApexchartsModule
+    NgApexchartsModule,
   ],
   exports: [
     MatIconModule,
@@ -72,7 +71,7 @@ import * as ApexCharts from 'apexcharts';
     NodeMapComponent,
     NgxGaugeModule,
     GaugeComponent,
-    ChartComponent
+    ChartComponent,
   ]
 })
 export class SharedModule { }

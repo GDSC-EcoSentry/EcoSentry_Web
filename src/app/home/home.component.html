@@ -14,12 +14,15 @@
                 </mat-option>
             </mat-autocomplete>
         </div>
-        <app-map
-            [stations]="allStations$ | async"
-            [selectedStation]="selectedStation$ | async"
-            [nodes]="allNodes$ | async"
-        ></app-map>
+        <div class="mat-elevation-z5">
+            <app-map
+                [stations]="allStations$ | async"
+                [selectedStation]="selectedStation$ | async"
+                [nodes]="allNodes$ | async"
+            ></app-map>
+        </div>
     </div>
 </div>
+
 
 

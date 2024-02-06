@@ -47,6 +47,10 @@ $my-theme: mat-light-theme(
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+ul.pagination {
+    margin-bottom: 0px;
+}
+
 mat-form-field{
     width: 100%;
 }

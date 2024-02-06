@@ -8,9 +8,10 @@
             [position]="stationPosition" 
             [options]="stationMarkerOptions"
             (mapMouseover)="openInfoWindow(marker, infoWindow)"
-            (mapMouseout)="closeInfoWindow(infoWindow)">
+            (mapMouseout)="closeInfoWindow(infoWindow)"
+            (mapClick)="openInfoWindow(marker, infoWindow)">
         </map-marker>
-        <map-info-window #infoWindow="mapInfoWindow">{{station.name}}: {{station.location}}</map-info-window>
+        <map-info-window #infoWindow="mapInfoWindow"><b>{{station.location}}: {{station.name}}</b></map-info-window>
     </ng-container>
     <ng-container *ngIf="node">
         <map-marker 
@@ -18,8 +19,9 @@
             [position]="nodePosition" 
             [options]="nodeMarkerOptions"
             (mapMouseover)="openInfoWindow(marker, infoWindow)"
-            (mapMouseout)="closeInfoWindow(infoWindow)">
+            (mapMouseout)="closeInfoWindow(infoWindow)"
+            (mapClick)="openInfoWindow(marker, infoWindow)">
         </map-marker>
-        <map-info-window #infoWindow="mapInfoWindow">{{node.name}}</map-info-window>
+        <map-info-window #infoWindow="mapInfoWindow"><b>{{node.name}}</b></map-info-window>
     </ng-container>
 </google-map>
