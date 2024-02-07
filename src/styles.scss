@@ -5,9 +5,9 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Importing Bootstrap SCSS file. */
-@import "node_modules/bootswatch/dist/morph/variables";
+@import "node_modules/bootswatch/dist/zephyr/variables";
 @import "./node_modules/bootstrap/scss/bootstrap";
-@import "node_modules/bootswatch/dist/morph/bootswatch";
+@import "node_modules/bootswatch/dist/zephyr/bootswatch";
 
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
