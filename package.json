@@ -30,6 +30,7 @@
     "@popperjs/core": "^2.11.6",
     "apexcharts": "^3.45.2",
     "bootstrap": "^5.2.3",
+    "bootswatch": "^5.3.2",
     "font-awesome": "^4.7.0",
     "ng-apexcharts": "^1.8.0",
     "ngx-bootstrap": "^11.0.2",

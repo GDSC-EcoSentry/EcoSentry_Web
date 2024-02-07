@@ -16,7 +16,7 @@
             <div routerLink="/account/profile" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
                 <mat-list-item><span class="ms-3"><i class="fa fa-user-circle-o me-2"></i>Profile</span></mat-list-item>
             </div>
-            <div routerLink="/panel" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}" *ngIf="(user$ | async)?.role == null ">
+            <div routerLink="/panel" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}" *ngIf="(user$ | async)?.role == 'admin' ">
                 <mat-list-item><span class="ms-3"><i class="fa fa-gears me-2"></i>Admin Panel</span></mat-list-item>
             </div>
             <div class="sidenav-footer" routerLink="/account/sign-out" (click)="logout()" *ngIf="user$ | async">
