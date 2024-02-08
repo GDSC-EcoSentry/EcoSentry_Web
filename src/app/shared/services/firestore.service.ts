@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, fromRef, getDocs, limit, orderBy, query, startAt } from '@angular/fire/firestore';
+import { Firestore, Timestamp, and, collection, collectionData, doc, fromRef, getDocs, limit, orderBy, query, startAt, where } from '@angular/fire/firestore';
 import { Observable, from, map, switchMap } from 'rxjs';
 import { Station, Node, Data } from '../models/station';
 import { NodeParams } from '../models/nodeParams';
@@ -12,18 +12,21 @@ export class FirestoreService {
 
   constructor(private firestore: Firestore) { }
 
+  //Get all stations
   get allStations$(): Observable<Station[]> {
     const ref = collection(this.firestore, 'stations');
     const queryAll = query(ref, orderBy('name', 'asc'));
     return collectionData(queryAll, {idField: 'id'}) as Observable<Station[]>;
   }
 
+  //Get all nodes from a station
   getAllNodes$(stationId: string): Observable<Node[] | null> {
     const ref = collection(this.firestore, 'stations', stationId, 'nodes');
     const queryAll = query(ref, orderBy('name', 'asc'));
     return collectionData(queryAll, {idField: 'id'}) as Observable<Node[]>
   }
 
+  //Get a specific node from a station
   getNode$(stationId: string, nodeId: string): Observable<Node | null> {
     const nodeRef = doc(this.firestore, 'stations', stationId, 'nodes', nodeId);
     return fromRef(nodeRef).pipe(
@@ -37,6 +40,7 @@ export class FirestoreService {
     );
   }
 
+  //Get a station
   getStation$(stationId: string): Observable<Station | null> {
     const stationRef = doc(this.firestore, 'stations', stationId);
     return fromRef(stationRef).pipe(
@@ -50,6 +54,7 @@ export class FirestoreService {
     );
   }
 
+  //Sorting, Paging for nodes
   getFilteredNodes$(nodeParams: NodeParams): Observable<Node[] | null> {
     const ref = collection(this.firestore, 'stations', nodeParams.stationId, 'nodes');
     
@@ -70,5 +75,12 @@ export class FirestoreService {
         return collectionData(next, { idField: 'id' }) as Observable<Node[]>;
       })
     )
+  }
+
+  //Get all data of a node
+  getData$(stationId: string, nodeId: string, start: Timestamp, end: Timestamp) {
+    const ref = collection(this.firestore, 'stations', stationId, 'nodes', nodeId, 'data');
+    const queryAll = query(ref, and(where('date', '>=', start), where('date', '<=', end)));
+    return collectionData(queryAll) as Observable<Data[]>
   }
 }
