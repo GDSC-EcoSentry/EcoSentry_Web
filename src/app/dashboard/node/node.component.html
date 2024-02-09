@@ -19,7 +19,14 @@
                     <app-node-map class="mat-elevation-z3 map" [node]="node" [station]="station"></app-node-map>
                 </div>
                 <div class="mat-elevation-z3 ms-4 chart d-flex justify-content-center align-items-center">
-                    <app-chart></app-chart>
+                    <app-chart
+                        [avgTemp]="averageTemperature"
+                        [avgHumidity]="averageHumidity"
+                        [avgSoilMoisture]="averageSoilMoisture"
+                        [avgRain]="averageRain"
+                        [avgCO]="averageCO"
+                        [avgDust]="averageDust"
+                    ></app-chart>
                 </div>
             </div>
             

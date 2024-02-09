@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { Data } from 'src/app/shared/models/station';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 
 @Component({
@@ -26,26 +27,53 @@ export class NodeComponent implements OnInit{
   data$ = this.firestoreService.getData$(this.stationId, this.nodeId, this.startYear, this.endYear);
 
   //Series for chart
-  averageTemperature: number[] = [];
-  averageHumidity: number[] = [];
-  averageSoilMoisture: number[] = [];
-  averageRain: number[] = [];
-  averageDust: number[] = [];
-  averageCO: number[] = [];
+  averageTemperature: (number | null)[] = new Array(12).fill(null);
+  averageHumidity: (number | null)[] = new Array(12).fill(null);
+  averageSoilMoisture: (number | null)[] = new Array(12).fill(null);
+  averageRain: (number | null)[] = new Array(12).fill(null);
+  averageDust: (number | null)[] = new Array(12).fill(null);
+  averageCO: (number | null)[] = new Array(12).fill(null);
 
   
   ngOnInit(): void {
     this.getAverage();
+    console.log(this.averageTemperature);
   }
   
   //Get avarage values for each datum by month
   getAverage() {
     this.data$.subscribe(data => {
-      const averagesByMonth = {};
+      const dataByMonth: any = {};
 
       data.forEach(datum => {
         const month = (datum.date as Timestamp).toDate().getMonth();
-        console.log(month);
+        //Initialize data for a month
+        if (!dataByMonth[month]) {
+          dataByMonth[month] = [];
+        }
+
+        //Insert data based on a specific month
+        dataByMonth[month].push(datum);
+
+        //Loop over the month which is key and calculate the averages
+        Object.keys(dataByMonth).forEach(monthKey => {
+          const month = Number(monthKey);
+          const monthData = dataByMonth[month];
+          const avgTemperature = monthData.reduce((sum: number, item: Data) => sum + item.temperature, 0) / monthData.length;
+          const avgHumidity = monthData.reduce((sum: number, item: Data) => sum + item.humidity, 0) / monthData.length;
+          const avgSoilMoisture = monthData.reduce((sum: number, item: Data) => sum + item.soil_moisture, 0) / monthData.length;
+          const avgRain = monthData.reduce((sum: number, item: Data) => sum + item.rain, 0) / monthData.length;
+          const avgDust = monthData.reduce((sum: number, item: Data) => sum + item.dust, 0) / monthData.length;
+          const avgCO = monthData.reduce((sum: number, item: Data) => sum + item.co, 0) / monthData.length;
+
+          //Populate the series
+          this.averageTemperature[month] = avgTemperature;
+          this.averageHumidity[month] = avgHumidity;
+          this.averageSoilMoisture[month] = avgSoilMoisture;
+          this.averageRain[month] = avgRain;
+          this.averageDust[month] = avgDust;
+          this.averageCO[month] = avgCO;
+        })
       })
     })
   }

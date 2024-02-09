@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "lodash"
+              "apexcharts"
            ],
             "outputPath": "dist/eco-sentry",
             "index": "src/index.html",
