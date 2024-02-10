@@ -22,9 +22,9 @@ export class NodeComponent implements OnInit{
   node$ = this.firestoreService.getNode$(this.stationId, this.nodeId);
   
   //Get only data of a specific year
-  startYear: Timestamp = Timestamp.fromDate(new Date(2023, 0, 1, 0, 0, 0));
-  endYear: Timestamp = Timestamp.fromDate(new Date(2023, 11, 31, 23, 59, 59));
-  data$ = this.firestoreService.getData$(this.stationId, this.nodeId, this.startYear, this.endYear);
+  selectedYear: number = 2023;
+  yearList: number[] = [];
+  data$ = this.firestoreService.getData$(this.stationId, this.nodeId, this.getStartDate(this.selectedYear), this.getEndDate(this.selectedYear));
 
   //Series for chart
   averageTemperature: (number | null)[] = new Array(12).fill(null);
@@ -36,10 +36,16 @@ export class NodeComponent implements OnInit{
 
   
   ngOnInit(): void {
+    this.getYearList();
     this.getAverage();
-    console.log(this.averageTemperature);
   }
   
+  getYearList() {
+    for(let year = 2023; year <= new Date().getFullYear(); year++) {
+      this.yearList.push(year);
+    }
+  }
+
   //Get avarage values for each datum by month
   getAverage() {
     this.data$.subscribe(data => {
@@ -73,9 +79,39 @@ export class NodeComponent implements OnInit{
           this.averageRain[month] = avgRain;
           this.averageDust[month] = avgDust;
           this.averageCO[month] = avgCO;
+
+          
         })
       })
+      console.log(this.averageTemperature);
     })
+  }
+
+  getSelectedYear(year: number) {
+    this.selectedYear = year;
+    console.log(this.selectedYear);
+    this.emptyData();
+    this.data$ = this.firestoreService.getData$(this.stationId, this.nodeId, this.getStartDate(this.selectedYear), this.getEndDate(this.selectedYear));
+    this.getAverage();
+  }
+
+  emptyData() {
+    this.averageTemperature = [];
+    this.averageHumidity = [];
+    this.averageSoilMoisture = [];
+    this.averageRain = [];
+    this.averageDust = [];
+    this.averageCO = [];
+  }
+
+  getStartDate(year: number) {
+    const startDate = Timestamp.fromDate(new Date(year, 0, 1, 0, 0, 0));
+    return startDate;
+  }
+
+  getEndDate(year: number) {
+    const endDate = Timestamp.fromDate(new Date(year, 11, 31, 23, 59, 59));
+    return endDate;
   }
 
   //Threshold for data gauge

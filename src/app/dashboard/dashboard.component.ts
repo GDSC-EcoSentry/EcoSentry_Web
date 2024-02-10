@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject, Observable, combineLatest, map, of, startWith, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, debounceTime, map, of, startWith, switchMap, tap } from 'rxjs';
 
 import { Node } from '../shared/models/station';
 import { NodeParams } from '../shared/models/nodeParams';
@@ -25,18 +25,23 @@ export class DashboardComponent{
 
   nodeParams = new NodeParams;
 
+  //Selected station observable
   private selectedStationId = new BehaviorSubject<string>('');
   selectedStationId$ = this.selectedStationId.asObservable();
-
+  //Page change observable
   private pageChanged = new BehaviorSubject<number>(1);
   pageChanged$ = this.pageChanged.asObservable();
-
+  //Sort order observable
   private orderChanged = new BehaviorSubject<string>('asc');
   orderChanged$ = this.orderChanged.asObservable();
 
+  /*Realtime station filtering, suggested station only
+   show up after user has stopped typing for 300ms*/
   stations$ = combineLatest([
     this.firestoreService.allStations$, 
-    this.searchStationsControl.valueChanges.pipe(startWith(''))
+    this.searchStationsControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300))
   ]).pipe(
     map(([stations, searchString]) => stations.filter(s => {
       const station = (s.location + ": " + s.name).toLowerCase();
@@ -44,6 +49,8 @@ export class DashboardComponent{
     }))
   )
 
+  /*Get the selected station, if none was selected, 
+  select the first station in the list by default*/
   selectedStation$ = combineLatest([this.firestoreService.allStations$, this.selectedStationId$]).pipe(
     map(([stations, stationId]) => {
       if (stationId) {
@@ -68,6 +75,7 @@ export class DashboardComponent{
     })
   );
 
+  //Realtime paging, sorting
   filteredNodes$ = combineLatest([
       //All of the value changes that will trigger this observable
       this.selectedStation$,

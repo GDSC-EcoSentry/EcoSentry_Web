@@ -1,11 +1,12 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import * as ApexCharts from 'apexcharts';
 import { 
   ApexAxisChartSeries, 
   ApexChart, 
   ApexDataLabels,        
   ApexGrid, 
   ApexLegend, 
-  ApexMarkers, 
+  ApexResponsive, 
   ApexStroke,      
   ApexTitleSubtitle, 
   ApexXAxis, 
@@ -25,6 +26,7 @@ export type ChartOptions = {
   grid: ApexGrid;
   legend: ApexLegend;
   title: ApexTitleSubtitle;
+  responsive: ApexResponsive[];
 };
 
 @Component({
@@ -33,8 +35,8 @@ export type ChartOptions = {
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit{
-  @ViewChild("chart")
-  chart!: ChartComponent;
+  @ViewChild('chart')
+  chart!: ApexCharts;
   chartOptions!: ChartOptions;
 
   //Input series
@@ -45,7 +47,26 @@ export class ChartComponent implements OnInit{
   @Input() avgRain!: (number | null)[];
   @Input() avgCO!: (number | null)[];
 
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes['avgTemp'] || changes['avgHumidity'] || changes['avgSoilMoisture'] || changes['avgDust'] || changes['avgRain'] || changes['avgCO']) {
+      this.chart.updateOptions({
+        series: [
+          { data: this.avgTemp },
+          { data: this.avgHumidity},
+          { data: this.avgSoilMoisture },
+          { data: this.avgRain },
+          { data: this.avgCO },
+          { data: this.avgDust }
+        ]
+      })
+    }
+  }
+
   ngOnInit(): void {
+    this.renderChart();
+  }
+
+  renderChart() {
     this.chartOptions = {
       series: [
         {
@@ -74,7 +95,7 @@ export class ChartComponent implements OnInit{
         }
       ],
       chart: {
-        width: 610,
+        width: 800,
         height: 350,
         type: "line",
         dropShadow: {
@@ -127,7 +148,17 @@ export class ChartComponent implements OnInit{
         floating: true,
         offsetY: -15,
         offsetX: -5
-      }
+      },
+      responsive: [
+        {
+          breakpoint: 1800,
+          options: {
+            chart: {
+              width: 600,
+            }
+          }
+        }
+      ]
     };
   }
 }
