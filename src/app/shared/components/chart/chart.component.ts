@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import * as ApexCharts from 'apexcharts';
 import { 
   ApexAxisChartSeries, 
@@ -12,8 +12,6 @@ import {
   ApexXAxis, 
   ApexYAxis, 
 } from 'ng-apexcharts';
-
-
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -38,6 +36,7 @@ export class ChartComponent implements OnInit{
   @ViewChild('chart')
   chart!: ApexCharts;
   chartOptions!: ChartOptions;
+  private shouldRedrawChart = false;
 
   //Input series
   @Input() avgTemp!: (number | null)[];
@@ -47,23 +46,22 @@ export class ChartComponent implements OnInit{
   @Input() avgRain!: (number | null)[];
   @Input() avgCO!: (number | null)[];
 
-  ngOnChanges(changes: SimpleChanges) {
-    if(changes['avgTemp'] || changes['avgHumidity'] || changes['avgSoilMoisture'] || changes['avgDust'] || changes['avgRain'] || changes['avgCO']) {
-      this.chart.updateOptions({
-        series: [
-          { data: this.avgTemp },
-          { data: this.avgHumidity},
-          { data: this.avgSoilMoisture },
-          { data: this.avgRain },
-          { data: this.avgCO },
-          { data: this.avgDust }
-        ]
-      })
-    }
+  //Set rerender flag to true
+  ngOnChanges() {
+    this.shouldRedrawChart = true;
   }
 
+  //Initialize chart
   ngOnInit(): void {
     this.renderChart();
+  }
+
+  //Check the flag and rerender if data changed
+  ngAfterViewChecked() {
+    if (this.shouldRedrawChart && this.chart) {
+      this.renderChart();
+      this.shouldRedrawChart = false;
+    }
   }
 
   renderChart() {

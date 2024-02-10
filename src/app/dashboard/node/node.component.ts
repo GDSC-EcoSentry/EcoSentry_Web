@@ -79,11 +79,8 @@ export class NodeComponent implements OnInit{
           this.averageRain[month] = avgRain;
           this.averageDust[month] = avgDust;
           this.averageCO[month] = avgCO;
-
-          
         })
       })
-      console.log(this.averageTemperature);
     })
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, debounceTime, map, startWith, switchMap } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { Node } from '../shared/models/station';
 import { FirestoreService } from '../shared/services/firestore.service';
@@ -14,7 +14,10 @@ export class HomeComponent{
 
   constructor(private firestoreService: FirestoreService) {}
 
+  //Get all stations
   allStations$ = this.firestoreService.allStations$;
+
+  //Get all nodes
   allNodes$ = this.firestoreService.allStations$.pipe(
     switchMap(stations => {
       const nodeObservables = stations.map(station =>
@@ -37,9 +40,13 @@ export class HomeComponent{
   private selectedStationId = new BehaviorSubject<string>('');
   selectedStationId$ = this.selectedStationId.asObservable();
 
+  //Filtering station
   stations$ = combineLatest([
     this.firestoreService.allStations$, 
-    this.searchStationsControl.valueChanges.pipe(startWith(''))
+    this.searchStationsControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300)
+    )
   ]).pipe(
     map(([stations, searchString]) => stations.filter(s => {
       const station = (s.location + ": " + s.name).toLowerCase();
@@ -47,6 +54,7 @@ export class HomeComponent{
     }))
   )
 
+  //Get selected station
   selectedStation$ = combineLatest([this.firestoreService.allStations$, this.selectedStationId$]).pipe(
     map(([stations, stationId]) => {
       if (stationId) {
