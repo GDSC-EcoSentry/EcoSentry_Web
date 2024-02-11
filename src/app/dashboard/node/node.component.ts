@@ -19,7 +19,7 @@ export class NodeComponent implements OnInit{
   constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService) {}
   
   //Use firestore service to get station, node, data observables
-  station$ = this.firestoreService.getStation$(this.stationId);
+  station$ = this.firestoreService.getStation$(this.stationId).pipe(take(1));
   node$ = this.firestoreService.getNode$(this.stationId, this.nodeId);
   
   //Get only data of a specific year
@@ -34,13 +34,13 @@ export class NodeComponent implements OnInit{
   averageRain: (number | null)[] = new Array(12).fill(null);
   averageDust: (number | null)[] = new Array(12).fill(null);
   averageCO: (number | null)[] = new Array(12).fill(null);
-
   
   ngOnInit(): void {
     this.getYearList();
     this.getAverage();
   }
   
+  //Get list of year from 2023 to current year
   getYearList() {
     for(let year = 2023; year <= new Date().getFullYear(); year++) {
       this.yearList.push(year);
@@ -95,6 +95,7 @@ export class NodeComponent implements OnInit{
     this.getAverage();
   }
 
+  //Empty the series
   emptyData() {
     this.averageTemperature = [];
     this.averageHumidity = [];

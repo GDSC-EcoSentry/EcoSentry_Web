@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject, Observable, combineLatest, debounceTime, map, of, startWith, switchMap, tap } from 'rxjs';
-
-import { Node } from '../shared/models/station';
+import { BehaviorSubject, combineLatest, debounceTime, map, of, startWith, switchMap, take, tap } from 'rxjs';
 import { NodeParams } from '../shared/models/nodeParams';
 import { FirestoreService } from '../shared/services/firestore.service';
 

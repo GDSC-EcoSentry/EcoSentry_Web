@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, combineLatest, debounceTime, map, startWith, switchMap } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { BehaviorSubject, combineLatest, debounceTime, map, startWith, switchMap, take } from 'rxjs';
 import { Node } from '../shared/models/station';
 import { FirestoreService } from '../shared/services/firestore.service';
 
@@ -15,7 +15,7 @@ export class HomeComponent{
   constructor(private firestoreService: FirestoreService) {}
 
   //Get all stations
-  allStations$ = this.firestoreService.allStations$;
+  allStations$ = this.firestoreService.allStations$.pipe(take(1));
 
   //Get all nodes
   allNodes$ = this.firestoreService.allStations$.pipe(
@@ -34,7 +34,8 @@ export class HomeComponent{
           return flattenedNodes;
         })
       );
-    })
+    }),
+    take(1)
   );
 
   private selectedStationId = new BehaviorSubject<string>('');

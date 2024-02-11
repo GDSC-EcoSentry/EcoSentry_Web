@@ -49,8 +49,6 @@ export class ChartComponent implements OnInit{
   //Set rerender flag to true
   ngOnChanges() {
     this.shouldRedrawChart = true;
-    console.log(this.avgTemp);
-    
   }
 
   //Initialize chart
