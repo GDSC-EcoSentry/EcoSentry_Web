@@ -3,7 +3,9 @@ import { FormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest, debounceTime, map, startWith, switchMap, take } from 'rxjs';
 import { Node } from '../shared/models/station';
 import { FirestoreService } from '../shared/services/firestore.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -63,7 +65,8 @@ export class HomeComponent{
       } else {
         return stations.length > 0 ? stations[0] : undefined;
       }
-    })
+    }),
+    untilDestroyed(this)
   );
 
   getSelectedStationId(stationId: string) {

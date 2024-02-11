@@ -3,7 +3,9 @@ import { FormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest, debounceTime, map, of, startWith, switchMap, take, tap } from 'rxjs';
 import { NodeParams } from '../shared/models/nodeParams';
 import { FirestoreService } from '../shared/services/firestore.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -44,7 +46,8 @@ export class DashboardComponent{
     map(([stations, searchString]) => stations.filter(s => {
       const station = (s.location + ": " + s.name).toLowerCase();
       return station.includes((searchString ?? '').toLowerCase());
-    }))
+    })),
+    untilDestroyed(this)
   )
 
   /*Get the selected station, if none was selected, 
@@ -56,7 +59,8 @@ export class DashboardComponent{
       } else {
         return stations.length > 0 ? stations[0] : null;
       }
-    })
+    }),
+    untilDestroyed(this)
   );
 
   allNodes$ = this.selectedStation$.pipe(
@@ -70,7 +74,8 @@ export class DashboardComponent{
         );
       }
       return of(null);
-    })
+    }),
+    untilDestroyed(this)
   );
 
   //Realtime paging, sorting
@@ -95,7 +100,8 @@ export class DashboardComponent{
         
         //Get the filtered nodes.
         return this.firestoreService.getFilteredNodes$(this.nodeParams);
-      })
+      }),
+      untilDestroyed(this)
     );
 
   constructor(private firestoreService: FirestoreService) {}
@@ -104,7 +110,7 @@ export class DashboardComponent{
     this.selectedStationId.next(stationId);
   }
 
-  onPageChanged(event: any){
+  onPageChanged(event: any) {
     if(this.nodeParams.pageNumber !== event){
       this.nodeParams.pageNumber = event;
       this.pageChanged.next(event);

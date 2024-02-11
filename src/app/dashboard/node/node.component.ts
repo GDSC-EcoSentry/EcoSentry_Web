@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { take } from 'rxjs';
 import { Data } from 'src/app/shared/models/station';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 
+@UntilDestroy()
 @Component({
   selector: 'app-node',
   templateUrl: './node.component.html',
@@ -20,7 +22,7 @@ export class NodeComponent implements OnInit{
   
   //Use firestore service to get station, node, data observables
   station$ = this.firestoreService.getStation$(this.stationId).pipe(take(1));
-  node$ = this.firestoreService.getNode$(this.stationId, this.nodeId);
+  node$ = this.firestoreService.getNode$(this.stationId, this.nodeId).pipe(untilDestroyed(this));
   
   //Get only data of a specific year
   selectedYear: number = 2023;
