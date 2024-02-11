@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs';
 import { Data } from 'src/app/shared/models/station';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 
@@ -47,9 +48,13 @@ export class NodeComponent implements OnInit{
   }
 
   //Get avarage values for each datum by month
+  //Take 1 prevents the chart from updating in real-time
   getAverage() {
-    this.data$.subscribe(data => {
+    this.data$.pipe(take(1)).subscribe(data => {
       const dataByMonth: any = {};
+
+      //Empty data so that it can be populate correctly again
+      this.emptyData();
 
       data.forEach(datum => {
         const month = (datum.date as Timestamp).toDate().getMonth();
@@ -86,8 +91,6 @@ export class NodeComponent implements OnInit{
 
   getSelectedYear(year: number) {
     this.selectedYear = year;
-    console.log(this.selectedYear);
-    this.emptyData();
     this.data$ = this.firestoreService.getData$(this.stationId, this.nodeId, this.getStartDate(this.selectedYear), this.getEndDate(this.selectedYear));
     this.getAverage();
   }
