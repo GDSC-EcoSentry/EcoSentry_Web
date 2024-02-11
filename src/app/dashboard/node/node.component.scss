@@ -1,6 +1,11 @@
+.node-container {
+    margin-top: 2%;
+}
+
 .backLink a {
     color: #123F15;
     text-decoration: none;
+    font-size: 13px;
 }
 
 .backLink {
@@ -11,6 +16,16 @@
 
 .title{
     color: #123F15;
+}
+
+.chart-and-map {
+    display: flex;
+    justify-content: space-between;
+}
+
+.data-cards {
+    display: flex;
+    justify-content: space-between;
 }
 
 .data-card {
@@ -31,5 +46,46 @@
 
 .chart {
     width: 55%;
+    margin-left: 2%;
     background-color: rgba(0,0,0,0.08);
+}
+
+@media only screen and (max-width: 768px) {
+
+    .node-container {
+        margin-top: 10%;
+    }
+
+    .title {
+       width: 270px;
+       font-size: 18px;
+       margin-left: 7%;
+    }
+
+    .backLink {
+        margin-left: 5%;
+    }
+
+    .chart-and-map {
+        display: block;
+    }
+
+    .data-cards {
+        display: block;
+    }
+
+    .map {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .chart {
+        width: 100%;
+        margin-left: 0px;
+    }
+
+    .data-card {
+        width: 100%;
+        margin-bottom: 20px;
+    }
 }

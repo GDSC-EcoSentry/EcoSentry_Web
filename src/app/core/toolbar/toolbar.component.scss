@@ -7,16 +7,24 @@
 .profile img{
     border-radius: 100%; 
     margin-right: 10px; 
+    width: 40px;
+    height: 40px;
     cursor: pointer;
 }
 
 .logo{
     cursor: pointer; 
-    font-size: 22px; 
-    color: white;
+    font-size: 22px;
+    color: #a7ffeb;
     margin-left: 15px;
-    font-weight: 600;
-    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    & img {
+        height: 50px;
+        box-shadow: 0px 8px 10px -9px rgba(0, 0, 0, 0.75);
+    }
 }
 
 mat-toolbar {
@@ -33,11 +41,30 @@ mat-toolbar {
     .profile img{
         border-radius: 100%; 
         margin-right: 5px; 
+        width: 30px;
+        height: 30px;
         cursor: pointer;
     }
 
     .logo{
-        margin-left: 5px;
+        cursor: pointer; 
+        font-size: 16px;
+        color: #a7ffeb;
+        margin-left: 3px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    
+        & img {
+            height: 40px;
+        }
+    }
+
+    .profile-button{
+        border-radius: 10px;
+        background-color: #123f15;
+        padding: 5px 10px;
+        font-size: 13px;
     }
 }
 

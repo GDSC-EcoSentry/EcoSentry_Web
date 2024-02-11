@@ -18,7 +18,10 @@ export class NodeComponent implements OnInit{
   stationId: string = this.activatedRoute.snapshot.paramMap.get('stationid') ?? '';
   nodeId: string = this.activatedRoute.snapshot.paramMap.get('nodeid') ?? '';
 
-  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute, 
+    private firestoreService: FirestoreService,
+  ) {}
   
   //Use firestore service to get station, node, data observables
   station$ = this.firestoreService.getStation$(this.stationId).pipe(take(1));

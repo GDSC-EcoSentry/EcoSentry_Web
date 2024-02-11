@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center mt-5" *ngIf="(user$ | async)?.role === 'admin' else notAuthorized">
     <div class="col-lg-4 col-md-5 col-sm-10 col-11 form-container mat-elevation-z5">
         <div class="text-center mt-2">
-            <h1 style="color: #1b5e20;">Add Station</h1>
+            <h1 style="color: #1b5e20;">ADD STATION</h1>
         </div>
         <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="mt-5">
             <div class="mb-4">

@@ -1,24 +1,24 @@
-<div class="d-flex justify-content-center align-items-center mt-5">
-    <div class="col-11" *ngIf="(station$ | async) as station">
+<div class="d-flex justify-content-center align-items-center node-container">
+    <div class="col-md-11 col-12" *ngIf="(station$ | async) as station">
         <ng-container *ngIf="(node$ | async) as node">
             <div class="mb-2 backLink">
                 <a routerLink="/dashboard"><i class="fa fa-arrow-left me-2"></i> <span>Back to dashboard</span></a>
             </div>
             <div class="d-flex">
-                <div class="d-flex justify-content-center align-items-center">
+                <div class="d-flex align-items-center">
                     <h2 class="title mb-3">{{station.location}}: {{station.name}} - {{node.name}}</h2>
                 </div>
                 <div style="padding-bottom: 30px">
-                    <button mat-icon-button class="d-flex justify-content-center align-items-center ms-2" routerLink="/dashboard/stations/{{station.id}}/node-edit/{{node.id}}">
+                    <button mat-icon-button class="d-flex justify-content-center align-items-center" routerLink="/dashboard/stations/{{station.id}}/node-edit/{{node.id}}">
                         <mat-icon>edit</mat-icon>
                     </button>
                 </div>
             </div>
-            <div class="d-flex justify-content-between mb-4">
+            <div class="mb-4 chart-and-map">
                 <div class="mat-elevation-z3 map">
                     <app-node-map class="mat-elevation-z3 map" [node]="node" [station]="station"></app-node-map>
                 </div>
-                <div class="mat-elevation-z3 ms-4 chart">
+                <div class="mat-elevation-z3 chart">
                     <mat-form-field>
                         <mat-label>Year</mat-label>
                         <mat-select [(value)]="selectedYear" (selectionChange)="getSelectedYear($event.value)">
@@ -38,7 +38,7 @@
                 </div>
             </div>
             
-            <div class="d-flex justify-content-between mb-3">
+            <div class="mb-3 data-cards">
                 <div class="mat-elevation-z2 data-card">
                     <img src="assets/images/thermometer-half-solid.svg" class="mt-2 ms-2 mb-2 symbols">
                     <div class="d-flex justify-content-center gauge">

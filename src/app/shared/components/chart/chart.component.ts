@@ -94,7 +94,7 @@ export class ChartComponent implements OnInit{
       ],
       chart: {
         width: 800,
-        height: 350,
+        height: 360,
         type: "line",
         dropShadow: {
           enabled: true,
@@ -153,6 +153,28 @@ export class ChartComponent implements OnInit{
           options: {
             chart: {
               width: 600,
+            }
+          }
+        },
+        {
+          breakpoint: 768,
+          options: {
+            chart: {
+              width: 440,
+            },
+            legend: {
+              horizontalAlign: "left",
+            }
+          }
+        },
+        {
+          breakpoint: 400,
+          options: {
+            chart: {
+              width: 370,
+            },
+            legend: {
+              horizontalAlign: "left",
             }
           }
         }

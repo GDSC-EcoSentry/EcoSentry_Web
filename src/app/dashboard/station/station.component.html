@@ -1,7 +1,7 @@
-<div class="d-flex justify-content-center mt-5" *ngIf="(user$ | async)?.role === 'admin' else notAuthorized">
+<div class="mt-5 station-container" *ngIf="(user$ | async)?.role === 'admin' else notAuthorized">
     <div class="col-lg-4 col-md-5 col-sm-10 col-11 form-container mat-elevation-z5">
         <div class="text-center mt-2">
-            <h1 style="color: #1b5e20;">Edit Station</h1>
+            <h1 style="color: #1b5e20;">EDIT STATION</h1>
         </div>
         <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="mt-5">
             <div class="mb-4">
@@ -18,9 +18,9 @@
             </div>
         </form>
     </div>
-    <div class="col-lg-4 col-md-5 col-sm-10 col-11 form-container mat-elevation-z5 ms-5">
+    <div class="col-lg-4 col-md-5 col-sm-10 col-11 form-container mat-elevation-z5">
         <div class="text-center mt-2">
-            <h1 style="color: #1b5e20;">Create Node</h1>
+            <h1 style="color: #1b5e20;">CREATE NODE</h1>
         </div>
         <form [formGroup]="addNodeForm" (ngSubmit)="onSubmit()" class="mt-5">
             <div class="mb-4">

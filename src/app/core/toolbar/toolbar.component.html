@@ -3,14 +3,14 @@
         <button mat-icon-button (click)="sidenav.toggle()" class="d-flex align-items-center">
             <mat-icon>menu</mat-icon>
         </button>
-        <span class="logo" routerLink="/" style="padding-top: 8px">
-            <img height="55" src="assets/images/logo.svg"> EcoSentry
-        </span>
+        <div class="logo d-flex align-items-center" routerLink="/">
+            <img src="assets/images/logo.svg" class="me-2"> EcoSentry
+        </div>
     </div>
     <div class="flex-grow-1"></div>
     <ng-container *ngIf="user$ | async as user; else loginButton">
         <div class="me-3 profile">
-            <img width="40" height="40" 
+            <img
                 [src]="user.photoURL ?? '../../assets/images/user-placeholder.jpg'" routerLink="/account/profile">
             <button mat-button routerLink="/account/profile" class="profile-button" color="accent">
                 <span style="font-weight: 600;">{{user.username}}</span>

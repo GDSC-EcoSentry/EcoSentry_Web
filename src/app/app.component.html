@@ -3,7 +3,7 @@
 </div>
 <app-toolbar [sidenav]="sidenav"></app-toolbar>
 <mat-sidenav-container class="mat-elevation-z5">
-    <mat-sidenav #sidenav mode="side">
+    <mat-sidenav #sidenav [mode]="getSideNavMode()">
         <mat-nav-list>
             <div routerLink="/" class="mt-3" routerLinkActive="active-list-item" [routerLinkActiveOptions]="{exact: true}">
                 <mat-list-item><span class="ms-3"><i class="fa fa-home me-2"></i>Home</span></mat-list-item>
