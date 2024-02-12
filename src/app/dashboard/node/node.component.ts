@@ -156,5 +156,4 @@ export class NodeComponent implements OnInit{
     '20': {color: 'orange'},
     '30': {color: 'red'}
   };
-  
 }

@@ -13,7 +13,7 @@ export interface Node {
     id: string;
     name: string;
     geopoint: GeoPoint;
-    chance: string;
+    danger: string;
     temperature: number;
     humidity: number;
     co: number;

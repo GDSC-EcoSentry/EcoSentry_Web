@@ -55,8 +55,8 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let node of filteredNodes$ | async" [ngClass]="{
-                            'table-danger': node.chance == 'High',
-                            'table-warning': node.chance == 'Medium'
+                            'table-danger': node.danger == 'High',
+                            'table-warning': node.danger == 'Medium'
                         }">
                             <td>
                                 <a routerLink="/dashboard/stations/{{(selectedStation$ | async)?.id}}/nodes/{{node.id}}" 
@@ -70,7 +70,7 @@
                             <td>{{node.co}} PPM</td>
                             <td>{{node.rain}} in/h</td>
                             <td>{{node.dust}} μg/m3</td>
-                            <td>{{node.chance}}</td>
+                            <td>{{node.danger}}</td>
                         </tr>
                     </tbody>
                 </table>
