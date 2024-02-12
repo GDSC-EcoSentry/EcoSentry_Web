@@ -13,6 +13,21 @@
                         <mat-icon>edit</mat-icon>
                     </button>
                 </div>
+                <div class="d-flex flex-grow-1 justify-content-end align-items-center status">
+                    <div class="text-end">
+                        Status: 
+                        <span class="
+                        {{node.danger === 'Low' ? 'text-success' : node.danger === 'Medium' ? 'text-warning' : 'text-danger'}}"
+                        style="font-weight: 550;"
+                        >
+                            {{node.danger === 'High' ? 'Alert' : node.danger === 'Medium' ? 'Medium' : 'Good'}}
+                        </span>
+                        <br>
+                        <div *ngIf="node.danger === 'High'" class="text-danger">
+                            Potential fire in the area
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="mb-4 chart-and-map">
                 <div class="mat-elevation-z3 map">

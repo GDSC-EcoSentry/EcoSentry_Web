@@ -5,7 +5,7 @@
 .backLink a {
     color: #123F15;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .backLink {
@@ -30,7 +30,7 @@
 
 .data-card {
     padding-bottom: 35px;
-    background-color: rgba(0,0,0,0.06);
+    background-image: linear-gradient( 174.2deg, rgba(240,246,238,1) 9.1%, rgb(234, 255, 255) 65.4%);
     width: 16%;
 }
 
@@ -47,7 +47,7 @@
 .chart {
     width: 55%;
     margin-left: 2%;
-    background-color: rgba(0,0,0,0.08);
+    background-image: linear-gradient( 174.2deg, rgba(240,246,238,1) 9.1%, rgb(234, 255, 255) 67.4%);
 }
 
 @media only screen and (max-width: 768px) {
@@ -64,6 +64,9 @@
 
     .backLink {
         margin-left: 5%;
+        & a {
+            font-size: 13px;
+        }
     }
 
     .chart-and-map {
@@ -87,5 +90,58 @@
     .data-card {
         width: 100%;
         margin-bottom: 20px;
+    }
+
+    .status {
+        margin-right: 2%;
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+
+    .node-container {
+        margin-top: 10%;
+    }
+
+    .title {
+       width: 220px;
+       font-size: 15px;
+       margin-left: 7%;
+    }
+
+    .backLink {
+        margin-left: 5%;
+        & a {
+            font-size: 11px;
+        }
+    }
+
+    .chart-and-map {
+        display: block;
+    }
+
+    .data-cards {
+        display: block;
+    }
+
+    .map {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .chart {
+        width: 100%;
+        margin-left: 0px;
+    }
+
+    .data-card {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .status {
+        margin-right: 2%;
+        font-size: 10px;
     }
 }

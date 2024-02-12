@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { take } from 'rxjs';
+import { map, take } from 'rxjs';
 import { Data } from 'src/app/shared/models/station';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 
@@ -23,9 +23,54 @@ export class NodeComponent implements OnInit{
     private firestoreService: FirestoreService,
   ) {}
   
+  //Threshold for data gauge
+  tempThreshold = {
+    '0': {color: '#2d9399'},
+    '30': {color: 'orange'},
+    '40': {color: 'red'}
+  };
+
+  humidityThreshold = {
+    '0': {color: 'red'},
+    '30': {color: '#37ae83'},
+    '90': {color: 'orange'}
+  };
+
+  soilMoistThreshold = {
+    '0': {color: 'red'},
+    '20': {color: 'orange'},
+    '40': {color: '#9d4337'}
+  };
+
+  coThreshold = {
+    '0': {color: '#a68b41'},
+    '5': {color: 'orange'},
+    '10': {color: 'red'}
+  };
+
+  rainThreshold = {
+    '0': {color: '#0d6cdd'},
+    '2': {color: 'orange'},
+    '5': {color: 'red'}
+  };
+
+  dustThreshold = {
+    '0': {color: '#574103'},
+    '20': {color: 'orange'},
+    '30': {color: 'red'}
+  };
+
   //Use firestore service to get station, node, data observables
   station$ = this.firestoreService.getStation$(this.stationId).pipe(take(1));
-  node$ = this.firestoreService.getNode$(this.stationId, this.nodeId).pipe(untilDestroyed(this));
+  node$ = this.firestoreService.getNode$(this.stationId, this.nodeId).pipe(
+    map(node => {
+      if(node) {
+        node.danger = this.getDanger(node.temperature, node.humidity, node.soil_moisture, node.rain, node.dust, node.co);
+      }
+      return node;
+    }),
+    untilDestroyed(this)
+  );
   
   //Get only data of a specific year
   selectedYear: number = 2023;
@@ -120,40 +165,59 @@ export class NodeComponent implements OnInit{
     return endDate;
   }
 
-  //Threshold for data gauge
-  tempThreshold = {
-    '0': {color: '#2d9399'},
-    '30': {color: 'orange'},
-    '40': {color: 'red'}
+  //WARNING LEVELS
+  levels = ['Low', 'Medium', 'High'];
+
+  //Thresholds for warning
+  tempWarning = {
+    '0': 'Low',
+    '40': 'Medium',
+    '50': 'High'
   };
 
-  humidityThreshold = {
-    '0': {color: 'red'},
-    '30': {color: '#37ae83'},
-    '90': {color: 'orange'}
+  coWarning = {
+    '0': 'Low',
+    '5': 'Medium',
+    '10': 'High'
   };
 
-  soilMoistThreshold = {
-    '0': {color: 'red'},
-    '20': {color: 'orange'},
-    '40': {color: '#9d4337'}
+  rainWarning = {
+    '0': 'Low',
+    '2': 'Medium',
+    '5': 'High'
   };
 
-  coThreshold = {
-    '0': {color: '#a68b41'},
-    '5': {color: 'orange'},
-    '10': {color: 'red'}
+  dustWarning = {
+    '0': 'Low',
+    '20': 'Medium',
+    '30': 'High'
   };
 
-  rainThreshold = {
-    '0': {color: '#0d6cdd'},
-    '2': {color: 'orange'},
-    '5': {color: 'red'}
-  };
+  //Get danger level based on the thresholds
+  getDangerLevel(value: number, thresholds: { [key: string]: string }): string {
+    let highestLevel = 'Low'; // Default to 'Low' if no threshold is met
+    for (const threshold in thresholds) {
+      if (value >= parseInt(threshold) && this.levels.indexOf(thresholds[threshold]) > this.levels.indexOf(highestLevel) ) {
+          highestLevel = thresholds[threshold];
+      }
+    }
+    return highestLevel; 
+  }
 
-  dustThreshold = {
-    '0': {color: '#574103'},
-    '20': {color: 'orange'},
-    '30': {color: 'red'}
-  };
+  //Get the level of danger for the node
+  getDanger(temp: number, humid: number, soil: number, rain: number, dust: number, co: number) {
+    const tempLevel = this.getDangerLevel(temp, this.tempWarning);
+    const coLevel = this.getDangerLevel(co, this.coWarning);
+    const rainLevel = this.getDangerLevel(rain, this.rainWarning);
+    const dustLevel = this.getDangerLevel(dust, this.dustWarning);
+    const humidLevel = humid >= 0 && humid <= 30 ? 'High' : humid >= 30 && humid <= 90 ? 'Low' : 'Medium';
+    const soilLevel = soil >= 0 && soil <= 20 ? 'High' : humid >= 20 && humid <= 40 ? 'Medium' : 'Low';
+
+    // You can customize the logic here to determine the overall danger level based on individual levels
+    // For this example, we'll simply return the highest danger level among all factors
+    console.log([tempLevel, humidLevel, soilLevel, coLevel, rainLevel, dustLevel]);
+    
+    return [tempLevel, humidLevel, soilLevel, coLevel, rainLevel, dustLevel]
+    .reduce((a, b) => (this.levels.indexOf(a) > this.levels.indexOf(b) ? a : b));
+  }
 }

@@ -171,7 +171,7 @@ export class ChartComponent implements OnInit{
           breakpoint: 400,
           options: {
             chart: {
-              width: 370,
+              width: 350,
             },
             legend: {
               horizontalAlign: "left",
