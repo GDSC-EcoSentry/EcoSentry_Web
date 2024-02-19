@@ -20,7 +20,7 @@
                         {{node.danger === 'Low' ? 'text-success' : node.danger === 'Medium' ? 'text-warning' : 'text-danger'}}"
                         style="font-weight: 550;"
                         >
-                            {{node.danger === 'High' ? 'Alert' : node.danger === 'Medium' ? 'Medium' : 'Good'}}
+                            {{node.danger === 'High' ? 'Danger' : node.danger === 'Medium' ? 'Warning' : 'Safe'}}
                         </span>
                         <br>
                         <div *ngIf="node.danger === 'High'" class="text-danger">
