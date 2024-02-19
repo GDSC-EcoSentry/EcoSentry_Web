@@ -143,8 +143,8 @@ export class DashboardComponent{
 
   coThreshold = {
     '0': 'Low',
-    '5': 'Medium',
-    '10': 'High'
+    '50': 'Medium',
+    '100': 'High'
   };
 
   rainThreshold = {
@@ -155,8 +155,8 @@ export class DashboardComponent{
 
   dustThreshold = {
     '0': 'Low',
-    '20': 'Medium',
-    '30': 'High'
+    '50': 'Medium',
+    '100': 'High'
   };
 
   //Get danger level based on the thresholds

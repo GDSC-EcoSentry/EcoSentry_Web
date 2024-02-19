@@ -99,7 +99,7 @@
                         <app-gauge
                             [label] = "'CO'"
                             [append] ="'PPM'"
-                            [max] = "15"
+                            [max] = "200"
                             [value]="node.co"
                             [thresholdConfig]="coThreshold"
                         >
@@ -125,7 +125,7 @@
                         <app-gauge
                             [label] = "'Dust Particle'"
                             [append] ="'μg/m3'"
-                            [max] = "30"
+                            [max] = "150"
                             [value]="node.dust"
                             [thresholdConfig]="dustThreshold"
                         >
