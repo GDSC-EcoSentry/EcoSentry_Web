@@ -138,7 +138,7 @@ export class ChartComponent implements OnInit{
           text: "Readings",
         },
         min: 0,
-        max: 100
+        max: 200
       },
       legend: {
         position: "top",

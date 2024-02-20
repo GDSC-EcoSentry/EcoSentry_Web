@@ -44,20 +44,20 @@ export class NodeComponent implements OnInit{
 
   coThreshold = {
     '0': {color: '#a68b41'},
-    '50': {color: 'orange'},
-    '100': {color: 'red'}
+    '70': {color: 'orange'},
+    '150': {color: 'red'}
   };
 
   rainThreshold = {
     '0': {color: '#0d6cdd'},
-    '2': {color: 'orange'},
-    '5': {color: 'red'}
+    '50': {color: 'orange'},
+    '70': {color: 'red'}
   };
 
   dustThreshold = {
     '0': {color: '#574103'},
-    '50': {color: 'orange'},
-    '100': {color: 'red'}
+    '35': {color: 'orange'},
+    '50': {color: 'red'}
   };
 
   //Use firestore service to get station, node, data observables
@@ -177,20 +177,20 @@ export class NodeComponent implements OnInit{
 
   coWarning = {
     '0': 'Low',
-    '50': 'Medium',
-    '100': 'High'
+    '70': 'Medium',
+    '150': 'High'
   };
 
   rainWarning = {
     '0': 'Low',
-    '2': 'Medium',
-    '5': 'High'
+    '50': 'Medium',
+    '70': 'High'
   };
 
   dustWarning = {
     '0': 'Low',
-    '50': 'Medium',
-    '100': 'High'
+    '35': 'Medium',
+    '50': 'High'
   };
 
   //Get danger level based on the thresholds
