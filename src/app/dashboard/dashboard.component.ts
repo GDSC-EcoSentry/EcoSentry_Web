@@ -178,10 +178,6 @@ export class DashboardComponent{
     const dustLevel = this.getDangerLevel(dust, this.dustThreshold);
     const humidLevel = humid >= 0 && humid <= 30 ? 'High' : humid >= 30 && humid <= 90 ? 'Low' : 'Medium';
     const soilLevel = soil >= 0 && soil <= 20 ? 'High' : humid >= 20 && humid <= 40 ? 'Medium' : 'Low';
-
-    // You can customize the logic here to determine the overall danger level based on individual levels
-    // For this example, we'll simply return the highest danger level among all factors
-    console.log([tempLevel, humidLevel, soilLevel, coLevel, rainLevel, dustLevel]);
     
     return [tempLevel, humidLevel, soilLevel, coLevel, rainLevel, dustLevel]
     .reduce((a, b) => (this.levels.indexOf(a) > this.levels.indexOf(b) ? a : b));
