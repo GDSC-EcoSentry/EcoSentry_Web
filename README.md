@@ -3,6 +3,13 @@
 ## Overview
 Welcome to the EcoSentry Angular Web App! This application monitors forests using IoT devices that send temperature, CO levels, dust, humidity, soil moisture, rain intensity readings to the Firestore database.
 
+<p align="center">
+    <img alt="EcoSentry" title="GitPoint" src="https://imgur.com/7Cvhjlx.png" width="250">
+</p>
+
+## Demo
+Check out the demo: [EcoSentry Web App](https://gdsc-ecosentry.web.app)
+
 ## Features
 - **Authentication:**
   - Supports email/password and OAuth authentication
@@ -10,6 +17,7 @@ Welcome to the EcoSentry Angular Web App! This application monitors forests usin
 
 - **Google Maps Integration:**
   - Utilizes JavaScript Maps API and Angular Google Maps component
+  [Google Map](https://i.imgur.com/tar2Vns.png)
 
 - **Real-time Synchronization**
 
@@ -50,4 +58,4 @@ Welcome to the EcoSentry Angular Web App! This application monitors forests usin
 - GDSC Hackathon VN
 
 ## Acknowledgments
-A big thank you to GDSC for providing support with Cloud Credits for our project!
+A big thanks to Google for providing support with Cloud Credits for our project!
