@@ -7,6 +7,10 @@ Welcome to the EcoSentry Angular Web App! This application monitors forests usin
     <img alt="EcoSentry" title="GitPoint" src="https://imgur.com/7Cvhjlx.png" width="250">
 </p>
 
+<p align="center">
+    <img alt="Angular" title="GitPoint" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/2048px-Angular_full_color_logo.svg.png" width="300">
+</p>
+
 ## Demo
 Check out the demo: [EcoSentry Web App](https://gdsc-ecosentry.web.app)
 
@@ -17,7 +21,9 @@ Check out the demo: [EcoSentry Web App](https://gdsc-ecosentry.web.app)
 
 - **Google Maps Integration:**
   - Utilizes JavaScript Maps API and Angular Google Maps component
-  [Google Map](https://i.imgur.com/tar2Vns.png)
+  <p align="center">
+    <img alt="GoogleMap" title="GitPoint" src="https://i.imgur.com/tar2Vns.png" width="300">
+  </p>
 
 - **Real-time Synchronization**
 
@@ -29,7 +35,9 @@ Check out the demo: [EcoSentry Web App](https://gdsc-ecosentry.web.app)
 
 - **Chart Visualization:**
   - Utilizes ApexChart to display average data collected from nodes over each year
-
+  <p align="center">
+    <img alt="Chart" title="GitPoint" src="https://i.imgur.com/jbdoYVP.png" width="300">
+  </p>
 ## Prerequisites
 - Node.js (version ^18.10.0)
 - Angular CLI (version 16.x.x)
