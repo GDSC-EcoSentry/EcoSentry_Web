@@ -39,8 +39,8 @@ Check out the demo: [EcoSentry Web App](https://gdsc-ecosentry.web.app)
     <img alt="Chart" title="GitPoint" src="https://i.imgur.com/jbdoYVP.png" width="300">
   </p>
 ## Prerequisites
-- Node.js (version ^18.10.0)
-- Angular CLI (version 16.x.x)
+- [Node.js](https://nodejs.org) (version ^18.10.0)
+- [Angular CLI](https://angular.io/cli) (version 16.x.x)
 
 ## Installation
 1. Navigate to the 'client' folder
