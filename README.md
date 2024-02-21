@@ -22,7 +22,7 @@ Check out the demo: [EcoSentry Web App](https://gdsc-ecosentry.web.app)
 - **Google Maps Integration:**
   - Utilizes JavaScript Maps API and Angular Google Maps component
   <p align="center">
-    <img alt="GoogleMap" title="GitPoint" src="https://i.imgur.com/tar2Vns.png" width="300">
+    <img alt="GoogleMap" title="GitPoint" src="https://i.imgur.com/tar2Vns.png" width="400">
   </p>
 
 - **Real-time Synchronization**
@@ -36,7 +36,7 @@ Check out the demo: [EcoSentry Web App](https://gdsc-ecosentry.web.app)
 - **Chart Visualization:**
   - Utilizes ApexChart to display average data collected from nodes over each year
   <p align="center">
-    <img alt="Chart" title="GitPoint" src="https://i.imgur.com/jbdoYVP.png" width="300">
+    <img alt="Chart" title="GitPoint" src="https://i.imgur.com/jbdoYVP.png" width="500">
   </p>
 ## Prerequisites
 - [Node.js](https://nodejs.org) (version ^18.10.0)
