@@ -4,6 +4,7 @@ import { BehaviorSubject, combineLatest, debounceTime, map, of, startWith, switc
 import { NodeParams } from '../shared/models/nodeParams';
 import { FirestoreService } from '../shared/services/firestore.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { DangerDetectService } from '../shared/services/danger-detect.service';
 
 @UntilDestroy()
 @Component({
@@ -102,7 +103,7 @@ export class DashboardComponent{
         return this.firestoreService.getFilteredNodes$(this.nodeParams).pipe( //Apply danger level to each node
           map(nodes => {
             return nodes?.map(node => {
-              node.danger = this.getDanger(node.temperature, node.humidity, node.soil_moisture, node.rain, node.dust, node.co);
+              node.danger = this.dangerDetectService.getDanger(node);
               return node;
             });
           })
@@ -111,7 +112,11 @@ export class DashboardComponent{
       untilDestroyed(this)
     );
 
-  constructor(private firestoreService: FirestoreService) {}
+  //CONSTRUCTOR
+  constructor(
+    private firestoreService: FirestoreService,
+    private dangerDetectService: DangerDetectService
+  ) {}
 
   getSelectedStationId(stationId: string) {
     this.selectedStationId.next(stationId);
@@ -129,57 +134,5 @@ export class DashboardComponent{
       this.orderChanged.next('desc');
     }
     else this.orderChanged.next('asc');
-  }
-
-  //WARNING LEVELS
-  levels = ['Low', 'Medium', 'High'];
-
-  //Thresholds for each reading
-  tempThreshold = {
-    '0': 'Low',
-    '40': 'Medium',
-    '50': 'High'
-  };
-
-  coThreshold = {
-    '0': 'Low',
-    '70': 'Medium',
-    '150': 'High'
-  };
-
-  rainThreshold = {
-    '0': 'Low',
-    '50': 'Medium',
-    '70': 'High'
-  };
-
-  dustThreshold = {
-    '0': 'Low',
-    '35': 'Medium',
-    '50': 'High'
-  };
-
-  //Get danger level based on the thresholds
-  getDangerLevel(value: number, thresholds: { [key: string]: string }): string {
-    let highestLevel = 'Low'; // Default to 'Low' if no threshold is met
-    for (const threshold in thresholds) {
-      if (value >= parseInt(threshold) && this.levels.indexOf(thresholds[threshold]) > this.levels.indexOf(highestLevel) ) {
-          highestLevel = thresholds[threshold];
-      }
-    }
-    return highestLevel; 
-  }
-
-  //Get the level of danger for the node
-  getDanger(temp: number, humid: number, soil: number, rain: number, dust: number, co: number) {
-    const tempLevel = this.getDangerLevel(temp, this.tempThreshold);
-    const coLevel = this.getDangerLevel(co, this.coThreshold);
-    const rainLevel = this.getDangerLevel(rain, this.rainThreshold);
-    const dustLevel = this.getDangerLevel(dust, this.dustThreshold);
-    const humidLevel = humid >= 0 && humid <= 30 ? 'High' : humid >= 30 && humid <= 90 ? 'Low' : 'Medium';
-    const soilLevel = soil >= 0 && soil <= 20 ? 'High' : humid >= 20 && humid <= 40 ? 'Medium' : 'Low';
-    
-    return [tempLevel, humidLevel, soilLevel, coLevel, rainLevel, dustLevel]
-    .reduce((a, b) => (this.levels.indexOf(a) > this.levels.indexOf(b) ? a : b));
   }
 }
