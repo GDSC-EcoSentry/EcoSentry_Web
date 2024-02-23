@@ -122,12 +122,12 @@ export class NodeComponent implements OnInit{
         Object.keys(dataByMonth).forEach(monthKey => {
           const month = Number(monthKey);
           const monthData = dataByMonth[month];
-          const avgTemperature = monthData.reduce((sum: number, item: Data) => sum + item.temperature, 0) / monthData.length;
-          const avgHumidity = monthData.reduce((sum: number, item: Data) => sum + item.humidity, 0) / monthData.length;
-          const avgSoilMoisture = monthData.reduce((sum: number, item: Data) => sum + item.soil_moisture, 0) / monthData.length;
-          const avgRain = monthData.reduce((sum: number, item: Data) => sum + item.rain, 0) / monthData.length;
-          const avgDust = monthData.reduce((sum: number, item: Data) => sum + item.dust, 0) / monthData.length;
-          const avgCO = monthData.reduce((sum: number, item: Data) => sum + item.co, 0) / monthData.length;
+          const avgTemperature = parseFloat((monthData.reduce((sum: number, item: Data) => sum + item.temperature, 0) / monthData.length).toFixed(2));
+          const avgHumidity = parseFloat((monthData.reduce((sum: number, item: Data) => sum + item.humidity, 0) / monthData.length).toFixed(2));
+          const avgSoilMoisture = parseFloat((monthData.reduce((sum: number, item: Data) => sum + item.soil_moisture, 0) / monthData.length).toFixed(2));
+          const avgRain = parseFloat((monthData.reduce((sum: number, item: Data) => sum + item.rain, 0) / monthData.length).toFixed(2));
+          const avgDust = parseFloat((monthData.reduce((sum: number, item: Data) => sum + item.dust, 0) / monthData.length).toFixed(2));
+          const avgCO = parseFloat((monthData.reduce((sum: number, item: Data) => sum + item.co, 0) / monthData.length).toFixed(2));
 
           //Populate the series
           this.averageTemperature[month] = avgTemperature;
